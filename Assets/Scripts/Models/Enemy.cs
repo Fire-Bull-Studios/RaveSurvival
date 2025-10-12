@@ -49,9 +49,11 @@ namespace RaveSurvival
     
 		public void StartAction()
 		{
+      Debug.Log($"Changing state to {enemyState}");
       switch (enemyState)
       {
         case EnemyState.IDLE:
+          target = null;
           behaviorCo = BecomeIdle();
           StartCoroutine(behaviorCo);
           break;
@@ -75,15 +77,6 @@ namespace RaveSurvival
       }
 		}
 
-		public void PlayerSpotted(Transform player)
-		{
-			if (target != player && behaviorCo == null)
-			{
-				target = player;
-				ChangeState(EnemyState.ATTACK);
-			}
-		}
-
 		public IEnumerator AttackPlayer(Transform player)
 		{
 			float wait = 0.25f;
@@ -100,14 +93,24 @@ namespace RaveSurvival
 				yield return wait;
 			}
 		}
-		
-		public void NoPlayerFound()
-		{
-      if (behaviorCo != null)
+    
+		public void PlayerSpotted(Transform player)
+    {
+      if (target != player)
       {
-        IEnumerator delay = DelayedStop(2f);
-        StartCoroutine(delay);
+        target = player;
+        ChangeState(EnemyState.ATTACK);
       }
+    }
+
+    public void NoPlayerFound()
+    {
+      // if (behaviorCo != null)
+      // {
+      //   IEnumerator delay = DelayedStop(2f);
+      //   StartCoroutine(delay);
+      // }
+      ChangeState(EnemyState.IDLE);
 		}
 
     public void HitObstacle(bool x)
@@ -115,11 +118,11 @@ namespace RaveSurvival
       hitObstacle = x;
       if (x)
       {
-        Debug.Log($"{name} hit obstacle");
+        //Debug.Log($"{name} hit obstacle");
       }
       else
       {
-        Debug.Log($"{name} did not hit obstacle");
+        //Debug.Log($"{name} did not hit obstacle");
       }
     }
 
@@ -168,14 +171,14 @@ namespace RaveSurvival
 
     private IEnumerator BecomeIdle()
     {
-      Debug.Log($"{gameObject.name} become idle");
+      //Debug.Log($"{gameObject.name} become idle");
       yield return new WaitForSeconds(5f);
       ChangeState(EnemyState.WANDER);
     }
 
     private IEnumerator Wander()
     {
-      Debug.Log($"{gameObject.name} start wandering");
+      //Debug.Log($"{gameObject.name} start wandering");
       Vector3 destination = setPath();
       while (gameObject.transform.position != destination)
       {
