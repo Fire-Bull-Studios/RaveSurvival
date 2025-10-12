@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Threading;
+using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -43,6 +44,8 @@ namespace RaveSurvival
     private void Scan()
     {
       count = Physics.OverlapSphereNonAlloc(transform.position, distance, colliders, layers, QueryTriggerInteraction.Collide);
+      canSeePlayer = false;
+      bool obstacleFound = false;
       for (int i = 0; i < count; ++i)
       {
         GameObject target = colliders[i].gameObject;
@@ -52,11 +55,19 @@ namespace RaveSurvival
           canSeePlayer = true;
           enemy.PlayerSpotted(target.transform);
         }
-        else
+        if (IsInSight(target) && target.layer == LayerMask.NameToLayer("Obstruction"))
         {
-          canSeePlayer = false;
-          enemy.NoPlayerFound();
+          obstacleFound = true;
+          enemy.HitObstacle(true);
         }
+      }
+      if (!canSeePlayer)
+      {
+        enemy.NoPlayerFound();
+      }
+      if (!obstacleFound)
+      {
+        enemy.HitObstacle(false);
       }
     }
 

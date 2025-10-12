@@ -12,9 +12,10 @@ namespace RaveSurvival
 		public float range = 10f;
 		private NavMeshAgent agent;
 		private Transform target = null;
-		private IEnumerator behaviorCo = null;
-		public EnemyState enemyState = EnemyState.IDLE;
-		public Gun gun;
+    private IEnumerator behaviorCo = null;
+    private bool hitObstacle = false;
+    private EnemyState enemyState = EnemyState.IDLE;
+    public Gun gun;
 
 		public enum EnemyState
 		{
@@ -25,19 +26,61 @@ namespace RaveSurvival
 			DEAD
 		};
 
-		public void Start()
-		{
-			enemyState = EnemyState.IDLE;
-			agent = GetComponent<NavMeshAgent>();
-		}
+    public void Start()
+    {
+      agent = GetComponent<NavMeshAgent>();
+      StartAction();
+    }
+
+    public void ChangeState(EnemyState state)
+    {
+      if (state == enemyState)
+      {
+        return;
+      }
+      if (behaviorCo != null)
+      {
+        StopCoroutine(behaviorCo);
+        behaviorCo = null;
+      }
+      enemyState = state;
+      StartAction();
+    }
+    
+    public void StartAction()
+    {
+      switch (enemyState)
+      {
+        case EnemyState.IDLE:
+          behaviorCo = BecomeIdle();
+          StartCoroutine(behaviorCo);
+          break;
+        case EnemyState.WANDER:
+          behaviorCo = Wander();
+          StartCoroutine(behaviorCo);
+          break;
+        case EnemyState.CHASE:
+          MoveToPlayer(target);
+          break;
+        case EnemyState.ATTACK:
+          behaviorCo = AttackPlayer(target);
+          StartCoroutine(behaviorCo);
+          break;
+        case EnemyState.DEAD:
+          Die();
+          break;
+        default:
+          Debug.LogError($"Invalid state passed ({enemyState}). Kinda cringe if you ask me.");
+          break;
+      }
+    }
 
 		public void PlayerSpotted(Transform player)
 		{
 			if (target != player && behaviorCo == null)
-			{
+      {
 				target = player;
-				behaviorCo = AttackPlayer(target);
-				StartCoroutine(behaviorCo);
+        ChangeState(EnemyState.ATTACK);
 			}
 		}
 
@@ -57,16 +100,27 @@ namespace RaveSurvival
 				yield return wait;
 			}
 		}
-		public void NoPlayerFound()
-		{
-			if (behaviorCo != null)
-			{
-				IEnumerator delay = DelayedStop(behaviorCo, 2f);
-				StartCoroutine(delay);
-				behaviorCo = null;
-				target = null;
-			}
-		}
+    public void NoPlayerFound()
+    {
+      if (behaviorCo != null)
+      {
+        IEnumerator delay = DelayedStop(2f);
+        StartCoroutine(delay);
+      }
+
+    }
+    public void HitObstacle(bool x)
+    {
+      hitObstacle = x;
+      if (x)
+      {
+        Debug.Log($"{name} hit obstacle");
+      }
+      else
+      {
+        Debug.Log($"{name} did not hit obstacle");
+      }
+    }
 
 		private void MoveToPlayer(Transform player)
 		{
@@ -105,12 +159,43 @@ namespace RaveSurvival
 			Destroy(gameObject);
 		}
 
-		private IEnumerator DelayedStop(IEnumerator co, float seconds)
-		{
-			yield return new WaitForSeconds(seconds);
-			StopCoroutine(co);
-			enemyState = EnemyState.IDLE;
-		}
+    private IEnumerator DelayedStop(float seconds)
+    {
+      yield return new WaitForSeconds(seconds);
+      ChangeState(EnemyState.IDLE);
+    }
+
+    private IEnumerator BecomeIdle()
+    {
+      Debug.Log($"{gameObject.name} become idle");
+      yield return new WaitForSeconds(5f);
+      ChangeState(EnemyState.WANDER);
+    }
+
+    private IEnumerator Wander()
+    {
+      Debug.Log($"{gameObject.name} start wandering");
+      Vector3 destination = setPath();
+      while (gameObject.transform.position != destination)
+      {
+        if (hitObstacle)
+        {
+          setPath();
+        }
+        yield return null;
+      }
+      ChangeState(EnemyState.IDLE);
+      yield return null;
+    }
+    
+    private Vector3 setPath()
+    {
+      transform.Rotate(transform.forward, 90f);
+      int rand = UnityEngine.Random.Range(10, 30);
+      Vector3 destination = transform.localPosition + (transform.forward * rand);
+      agent.SetDestination(destination);
+      return destination;
+    }
 	}
 }
 
