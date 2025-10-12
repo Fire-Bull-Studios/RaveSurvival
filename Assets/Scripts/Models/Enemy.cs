@@ -12,10 +12,10 @@ namespace RaveSurvival
 		public float range = 10f;
 		private NavMeshAgent agent;
 		private Transform target = null;
-    private IEnumerator behaviorCo = null;
-    private bool hitObstacle = false;
-    private EnemyState enemyState = EnemyState.IDLE;
-    public Gun gun;
+		private IEnumerator behaviorCo = null;
+		private bool hitObstacle = false;
+		private EnemyState enemyState = EnemyState.IDLE;
+		public Gun gun;
 
 		public enum EnemyState
 		{
@@ -26,61 +26,61 @@ namespace RaveSurvival
 			DEAD
 		};
 
-    public void Start()
-    {
-      agent = GetComponent<NavMeshAgent>();
-      StartAction();
-    }
+		public void Start()
+		{
+		agent = GetComponent<NavMeshAgent>();
+		StartAction();
+		}
 
-    public void ChangeState(EnemyState state)
-    {
-      if (state == enemyState)
-      {
-        return;
-      }
-      if (behaviorCo != null)
-      {
-        StopCoroutine(behaviorCo);
-        behaviorCo = null;
-      }
-      enemyState = state;
-      StartAction();
-    }
+		public void ChangeState(EnemyState state)
+		{
+		if (state == enemyState)
+		{
+			return;
+		}
+		if (behaviorCo != null)
+		{
+			StopCoroutine(behaviorCo);
+			behaviorCo = null;
+		}
+		enemyState = state;
+		StartAction();
+		}
     
-    public void StartAction()
-    {
-      switch (enemyState)
-      {
-        case EnemyState.IDLE:
-          behaviorCo = BecomeIdle();
-          StartCoroutine(behaviorCo);
-          break;
-        case EnemyState.WANDER:
-          behaviorCo = Wander();
-          StartCoroutine(behaviorCo);
-          break;
-        case EnemyState.CHASE:
-          MoveToPlayer(target);
-          break;
-        case EnemyState.ATTACK:
-          behaviorCo = AttackPlayer(target);
-          StartCoroutine(behaviorCo);
-          break;
-        case EnemyState.DEAD:
-          Die();
-          break;
-        default:
-          Debug.LogError($"Invalid state passed ({enemyState}). Kinda cringe if you ask me.");
-          break;
-      }
-    }
+		public void StartAction()
+		{
+		switch (enemyState)
+		{
+			case EnemyState.IDLE:
+			behaviorCo = BecomeIdle();
+			StartCoroutine(behaviorCo);
+			break;
+			case EnemyState.WANDER:
+			behaviorCo = Wander();
+			StartCoroutine(behaviorCo);
+			break;
+			case EnemyState.CHASE:
+			MoveToPlayer(target);
+			break;
+			case EnemyState.ATTACK:
+			behaviorCo = AttackPlayer(target);
+			StartCoroutine(behaviorCo);
+			break;
+			case EnemyState.DEAD:
+			Die();
+			break;
+			default:
+			Debug.LogError($"Invalid state passed ({enemyState}). Kinda cringe if you ask me.");
+			break;
+		}
+		}
 
 		public void PlayerSpotted(Transform player)
 		{
 			if (target != player && behaviorCo == null)
-      {
+			{
 				target = player;
-        ChangeState(EnemyState.ATTACK);
+				ChangeState(EnemyState.ATTACK);
 			}
 		}
 
@@ -100,15 +100,16 @@ namespace RaveSurvival
 				yield return wait;
 			}
 		}
-    public void NoPlayerFound()
-    {
-      if (behaviorCo != null)
-      {
-        IEnumerator delay = DelayedStop(2f);
-        StartCoroutine(delay);
-      }
+		
+		public void NoPlayerFound()
+		{
+				if (behaviorCo != null)
+				{
+					IEnumerator delay = DelayedStop(2f);
+					StartCoroutine(delay);
+				}
 
-    }
+		}
     public void HitObstacle(bool x)
     {
       hitObstacle = x;
