@@ -28,51 +28,51 @@ namespace RaveSurvival
 
 		public void Start()
 		{
-		agent = GetComponent<NavMeshAgent>();
-		StartAction();
+      agent = GetComponent<NavMeshAgent>();
+      StartAction();
 		}
 
 		public void ChangeState(EnemyState state)
 		{
-		if (state == enemyState)
-		{
-			return;
-		}
-		if (behaviorCo != null)
-		{
-			StopCoroutine(behaviorCo);
-			behaviorCo = null;
-		}
-		enemyState = state;
-		StartAction();
+      if (state == enemyState)
+      {
+        return;
+      }
+      if (behaviorCo != null)
+      {
+        StopCoroutine(behaviorCo);
+        behaviorCo = null;
+      }
+      enemyState = state;
+      StartAction();
 		}
     
 		public void StartAction()
 		{
-		switch (enemyState)
-		{
-			case EnemyState.IDLE:
-			behaviorCo = BecomeIdle();
-			StartCoroutine(behaviorCo);
-			break;
-			case EnemyState.WANDER:
-			behaviorCo = Wander();
-			StartCoroutine(behaviorCo);
-			break;
-			case EnemyState.CHASE:
-			MoveToPlayer(target);
-			break;
-			case EnemyState.ATTACK:
-			behaviorCo = AttackPlayer(target);
-			StartCoroutine(behaviorCo);
-			break;
-			case EnemyState.DEAD:
-			Die();
-			break;
-			default:
-			Debug.LogError($"Invalid state passed ({enemyState}). Kinda cringe if you ask me.");
-			break;
-		}
+      switch (enemyState)
+      {
+        case EnemyState.IDLE:
+        behaviorCo = BecomeIdle();
+        StartCoroutine(behaviorCo);
+        break;
+        case EnemyState.WANDER:
+        behaviorCo = Wander();
+        StartCoroutine(behaviorCo);
+        break;
+        case EnemyState.CHASE:
+        MoveToPlayer(target);
+        break;
+        case EnemyState.ATTACK:
+        behaviorCo = AttackPlayer(target);
+        StartCoroutine(behaviorCo);
+        break;
+        case EnemyState.DEAD:
+        Die();
+        break;
+        default:
+        Debug.LogError($"Invalid state passed ({enemyState}). Kinda cringe if you ask me.");
+        break;
+      }
 		}
 
 		public void PlayerSpotted(Transform player)
@@ -103,13 +103,13 @@ namespace RaveSurvival
 		
 		public void NoPlayerFound()
 		{
-				if (behaviorCo != null)
-				{
-					IEnumerator delay = DelayedStop(2f);
-					StartCoroutine(delay);
-				}
-
+      if (behaviorCo != null)
+      {
+        IEnumerator delay = DelayedStop(2f);
+        StartCoroutine(delay);
+      }
 		}
+
     public void HitObstacle(bool x)
     {
       hitObstacle = x;
