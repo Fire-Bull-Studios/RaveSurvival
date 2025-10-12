@@ -52,26 +52,26 @@ namespace RaveSurvival
       switch (enemyState)
       {
         case EnemyState.IDLE:
-        behaviorCo = BecomeIdle();
-        StartCoroutine(behaviorCo);
-        break;
+          behaviorCo = BecomeIdle();
+          StartCoroutine(behaviorCo);
+          break;
         case EnemyState.WANDER:
-        behaviorCo = Wander();
-        StartCoroutine(behaviorCo);
-        break;
+          behaviorCo = Wander();
+          StartCoroutine(behaviorCo);
+          break;
         case EnemyState.CHASE:
-        MoveToPlayer(target);
-        break;
+          MoveToPlayer(target);
+          break;
         case EnemyState.ATTACK:
-        behaviorCo = AttackPlayer(target);
-        StartCoroutine(behaviorCo);
-        break;
+          behaviorCo = AttackPlayer(target);
+          StartCoroutine(behaviorCo);
+          break;
         case EnemyState.DEAD:
-        Die();
-        break;
+          Die();
+          break;
         default:
-        Debug.LogError($"Invalid state passed ({enemyState}). Kinda cringe if you ask me.");
-        break;
+          Debug.LogError($"Invalid state passed ({enemyState}). Kinda cringe if you ask me.");
+          break;
       }
 		}
 
