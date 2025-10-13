@@ -11,7 +11,8 @@ namespace RaveSurvival
 		public float health = 50f;
 		public float range = 10f;
 		private NavMeshAgent agent;
-		private Transform target = null;
+    private Transform target = null;
+    private bool playerSpotted = false;
 		private IEnumerator behaviorCo = null;
 		private bool hitObstacle = false;
 		private EnemyState enemyState = EnemyState.IDLE;
@@ -40,7 +41,7 @@ namespace RaveSurvival
       }
       if (behaviorCo != null)
       {
-        StopCoroutine(behaviorCo);
+        StopAllCoroutines();
         behaviorCo = null;
       }
       enemyState = state;
@@ -96,6 +97,7 @@ namespace RaveSurvival
     
 		public void PlayerSpotted(Transform player)
     {
+      playerSpotted = true;
       if (target != player)
       {
         target = player;
@@ -105,12 +107,12 @@ namespace RaveSurvival
 
     public void NoPlayerFound()
     {
-      // if (behaviorCo != null)
-      // {
-      //   IEnumerator delay = DelayedStop(2f);
-      //   StartCoroutine(delay);
-      // }
-      ChangeState(EnemyState.IDLE);
+      playerSpotted = false;
+      if (behaviorCo != null)
+      {
+        IEnumerator delay = DelayedStop(5f);
+        StartCoroutine(delay);
+      }
 		}
 
     public void HitObstacle(bool x)
@@ -166,7 +168,11 @@ namespace RaveSurvival
     private IEnumerator DelayedStop(float seconds)
     {
       yield return new WaitForSeconds(seconds);
-      ChangeState(EnemyState.IDLE);
+      if (!playerSpotted)
+      {
+        ChangeState(EnemyState.IDLE);
+      }
+      yield return null;
     }
 
     private IEnumerator BecomeIdle()
@@ -184,7 +190,7 @@ namespace RaveSurvival
       {
         if (hitObstacle)
         {
-          setPath();
+          destination = setPath();
         }
         yield return null;
       }
@@ -194,9 +200,10 @@ namespace RaveSurvival
     
     private Vector3 setPath()
     {
-      transform.Rotate(transform.forward, 90f);
-      int rand = UnityEngine.Random.Range(10, 30);
-      Vector3 destination = transform.localPosition + (transform.forward * rand);
+      float randAngle = UnityEngine.Random.Range(-180f, 180f);
+      transform.Rotate(transform.up, randAngle);
+      int randDist = UnityEngine.Random.Range(10, 30);
+      Vector3 destination = transform.localPosition + (transform.forward * randDist);
       agent.SetDestination(destination);
       return destination;
     }
