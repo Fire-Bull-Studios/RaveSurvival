@@ -16,7 +16,7 @@ namespace RaveSurvival
 		private IEnumerator behaviorCo = null;
 		private bool hitObstacle = false;
 		private EnemyState enemyState = EnemyState.IDLE;
-		public Gun gun;
+    public Gun gun;
 
 		public enum EnemyState
 		{
@@ -27,11 +27,28 @@ namespace RaveSurvival
 			DEAD
 		};
 
-		public void Start()
-		{
+    public void Start()
+    {
       agent = GetComponent<NavMeshAgent>();
       StartAction();
-		}
+    }
+
+    void OnCollisionEnter(Collision col)
+    {
+      Debug.Log($"Collision was made!!!! {col.gameObject.name}");
+      if (col.gameObject.layer == LayerMask.NameToLayer("Obstruction"))
+      {
+        hitObstacle = true;
+      }
+    }
+
+    void OnCollisionExit(Collision col)
+    {
+      if (col.gameObject.layer == LayerMask.NameToLayer("Obstruction"))
+      {
+        hitObstacle = false;
+      }
+    }
 
 		public void ChangeState(EnemyState state)
 		{
@@ -50,7 +67,7 @@ namespace RaveSurvival
     
 		public void StartAction()
 		{
-      Debug.Log($"Changing state to {enemyState}");
+      //Debug.Log($"Changing state to {enemyState}");
       switch (enemyState)
       {
         case EnemyState.IDLE:
@@ -120,11 +137,11 @@ namespace RaveSurvival
       hitObstacle = x;
       if (x)
       {
-        //Debug.Log($"{name} hit obstacle");
+        Debug.Log($"{name} hit obstacle");
       }
       else
       {
-        //Debug.Log($"{name} did not hit obstacle");
+        Debug.Log($"{name} did not hit obstacle");
       }
     }
 
