@@ -213,7 +213,7 @@ Transform:
   m_GameObject: {fileID: 8123011296083600074}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.268, z: 0.515}
+  m_LocalPosition: {x: 0, y: 0.268, z: -0.74}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -231,9 +231,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0f77991b93393c47be3088e54e7b327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 28
-  angle: 45
-  height: 3.2
+  distance: 50.8
+  angle: 34.8
+  height: 3.3
   meshColor: {r: 1, g: 0, b: 0, a: 0.79607844}
   layers:
     serializedVersion: 2
@@ -251,6 +251,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7684563991805494172}
   - component: {fileID: 1111417242941230680}
+  - component: {fileID: 9123100100660390188}
   - component: {fileID: 5212835010371457191}
   - component: {fileID: 5948771111452516489}
   - component: {fileID: 2393494950104409680}
@@ -298,8 +299,23 @@ MonoBehaviour:
   syncInterval: 0
   health: 50
   range: 10
-  enemyState: 0
   gun: {fileID: 5503811084742342423}
+--- !u!114 &9123100100660390188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8485471596439444230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d4d4f97f44bb974bb99b7cbc7bb49af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: RaveSurvival::EnemyAlert
+  alertDistance: 75
+  layers:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!54 &5212835010371457191
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -337,12 +353,12 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

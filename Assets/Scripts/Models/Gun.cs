@@ -183,7 +183,7 @@ public class Gun : NetworkBehaviour
 				Enemy enemy = hit.transform.GetComponent<Enemy>();
 				if (enemy != null)
 				{
-					enemy.TakeDamage(damage, bulletStart);
+					enemy.TakeDamage(damage, bulletStart, originPosition);
 				}
 
 				GameObject impactFx = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
@@ -212,7 +212,7 @@ public class Gun : NetworkBehaviour
 				Enemy enemy = hit.transform.GetComponent<Enemy>();
 				if (enemy != null)
 				{
-					enemy.TakeDamage(damage, bulletStart);
+					enemy.TakeDamage(damage, bulletStart, originPosition);
 				}
 
 				GameObject impactFx = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
@@ -240,7 +240,7 @@ public class Gun : NetworkBehaviour
 				Enemy enemy = hit.transform.GetComponent<Enemy>();
 				if (enemy != null)
 				{
-					enemy.TakeDamage(damage, bulletStart);
+					enemy.TakeDamage(damage, bulletStart, originPosition);
 				}
 
 				GameObject impactFx = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));

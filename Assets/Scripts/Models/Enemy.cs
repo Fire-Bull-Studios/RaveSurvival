@@ -15,7 +15,8 @@ namespace RaveSurvival
     private bool playerSpotted = false;
 		private IEnumerator behaviorCo = null;
 		private bool hitObstacle = false;
-		private EnemyState enemyState = EnemyState.IDLE;
+    private EnemyState enemyState = EnemyState.IDLE;
+    private EnemyAlert megaphone = null;
     public Gun gun;
 
 		public enum EnemyState
@@ -30,6 +31,7 @@ namespace RaveSurvival
     public void Start()
     {
       agent = GetComponent<NavMeshAgent>();
+      megaphone = GetComponent<EnemyAlert>();
       StartAction();
     }
 
@@ -119,6 +121,7 @@ namespace RaveSurvival
       {
         target = player;
         ChangeState(EnemyState.ATTACK);
+        megaphone.AlertNearEnemies(target);
       }
     }
 
@@ -167,17 +170,18 @@ namespace RaveSurvival
 			}
 		}
 
-		public void TakeDamage(float dmg, Transform bulletDirection)
-		{
-			transform.LookAt(bulletDirection);
-			health -= dmg;
-			if (health <= 0f)
-			{
-				Die();
-			}
-		}
+    public void TakeDamage(float dmg, Transform bulletDirection, Vector3 pos)
+    {
+      transform.LookAt(bulletDirection);
+      agent.SetDestination(pos);
+      health -= dmg;
+      if (health <= 0f)
+      {
+        Die();
+      }
+    }
 
-		void Die()
+		private void Die()
 		{
 			Destroy(gameObject);
 		}
