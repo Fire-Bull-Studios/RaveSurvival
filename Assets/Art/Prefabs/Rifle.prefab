@@ -225,6 +225,7 @@ MonoBehaviour:
   damage: 10
   range: 100
   fireRate: 15
+  soundRange: 50
   weaponType: 0
   bulletStart: {fileID: 2470198516893144322}
   muzzleFlash: {fileID: 2509970891194643884}
