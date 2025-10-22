@@ -14,14 +14,16 @@ public class GunInspector: Editor
   VisualElement myInspector;
 
   FloatField damage;
-    FloatField range;
-    FloatField fireRate;
-    EnumField weaponType;
-    ObjectField fireSound;
-    ObjectField bulletStart;
-    ObjectField muzzleFlash;
-    ObjectField impactEffect;
-    ObjectField projectile;
+  FloatField range;
+  FloatField fireRate;
+  FloatField soundRange;
+  EnumField weaponType;
+  ObjectField fireSound;
+  ObjectField bulletStart;
+  ObjectField muzzleFlash;
+  ObjectField impactEffect;
+  ObjectField projectile;
+  
   public override VisualElement CreateInspectorGUI()
   {
     // Create a new VisualElement to be the root of our Inspector UI.
@@ -30,6 +32,7 @@ public class GunInspector: Editor
     damage = new("Damage") { bindingPath = "damage" };
     range = new("Range") { bindingPath = "range"};
     fireRate = new("FireRate") { bindingPath = "fireRate" };
+    soundRange = new("Sound Range") { bindingPath = "soundRange" };
     weaponType = new("Weapon Type") { bindingPath = "weaponType" };
     fireSound = new("Fire Sound") { bindingPath = "fireSound" };
     bulletStart = new("Bullet Start") { bindingPath = "bulletStart" };
@@ -41,6 +44,7 @@ public class GunInspector: Editor
     myInspector.Add(damage);
     myInspector.Add(range);
     myInspector.Add(fireRate);
+    myInspector.Add(soundRange);
     myInspector.Add(weaponType);
     myInspector.Add(fireSound);
     myInspector.Add(bulletStart);

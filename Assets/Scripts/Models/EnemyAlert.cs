@@ -1,25 +1,25 @@
+using PlasticGui;
 using RaveSurvival;
+using UnityEditor.UIElements;
 using UnityEngine;
 
-public class EnemyAlert: MonoBehaviour
+public class EnemyAlert : MonoBehaviour
 {
   public float alertDistance;
-  private Collider[] colliders = new Collider[5];
   public LayerMask layers;
 
   // Start is called once before the first execution of Update after the MonoBehaviour is created
   void Start()
   {
-    layers = gameObject.layer;
+    layers = 1 << gameObject.layer;
   }
 
   public void AlertNearEnemies(Transform player)
   {
-    int count = Physics.OverlapSphereNonAlloc(transform.position, alertDistance, colliders, layers, QueryTriggerInteraction.Collide);
-    for (int i = 0; i < count; i++)
+    Collider[] cols = Physics.OverlapSphere(transform.position, alertDistance, layers, QueryTriggerInteraction.Collide);
+    foreach (Collider col in cols)
     {
-      Debug.Log(colliders[i].gameObject.name);
-      Enemy enemy = colliders[i].gameObject.GetComponent<Enemy>();
+      Enemy enemy = col.gameObject.GetComponent<Enemy>();
       if (enemy != null)
       {
         enemy.PlayerSpotted(player);

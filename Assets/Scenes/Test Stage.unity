@@ -251,6 +251,51 @@ MonoBehaviour:
   m_IgnoreFromBuild: 0
   m_ApplyToChildren: 1
   m_AffectedAgents: ffffffff
+--- !u!1 &261486201
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 261486203}
+  - component: {fileID: 261486202}
+  m_Layer: 0
+  m_Name: _bootstraper
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &261486202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 261486201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef24dde37961b6649892f49e8670f1ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameplayManagersPrefab: {fileID: 2818008958907798441, guid: a45fc43e58f512b4697f6947d8331da5, type: 3}
+--- !u!4 &261486203
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 261486201}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.62, y: 8.53444, z: -2.05776}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &265355334
 GameObject:
   m_ObjectHideFlags: 0
@@ -418,13 +463,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 372573580}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.35147825, y: -0, z: -0, w: 0.9361961}
+  m_LocalRotation: {x: -0.032575946, y: -0, z: -0, w: 0.9994693}
   m_LocalPosition: {x: -0.267, y: 6.95, z: -17.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 41.156, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -3.734, y: 0, z: 0}
 --- !u!114 &372573584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1351,3 +1396,5 @@ SceneRoots:
   - {fileID: 919341716}
   - {fileID: 1020345014}
   - {fileID: 353758222}
+  - {fileID: 7173204388993840645}
+  - {fileID: 261486203}

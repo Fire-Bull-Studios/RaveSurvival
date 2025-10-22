@@ -3,16 +3,17 @@ using UnityEngine.SceneManagement;
 
 namespace RaveSurvival
 {
-    public class GameBootstraper : MonoBehaviour
+  public class GameBootstraper : MonoBehaviour
+  {
+    [SerializeField]
+    GameObject gameplayManagersPrefab;
+    private void Awake()
     {
-        [SerializeField]
-        GameObject gameplayManagersPrefab;
-        private void Awake()
-        {
-            if (GameManager.Instance == null && SpawnManager.Instance == null)
-            {
-                Instantiate(gameplayManagersPrefab);
-            }
-        }
+      if (GameManager.Instance == null && SpawnManager.Instance == null)
+      {
+        gameplayManagersPrefab.GetComponent<GameManager>().starterScene = SceneManager.GetActiveScene().name;
+        Instantiate(gameplayManagersPrefab);
+      }
     }
+  }
 }
