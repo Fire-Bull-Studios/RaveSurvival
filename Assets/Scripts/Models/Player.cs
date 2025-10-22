@@ -102,8 +102,7 @@ public class Player : NetworkBehaviour
 
   public void AlertNearEnemies()
   {
-    Collider[] colliders = Physics.OverlapSphere(transform.position, gunNoiseRange, LayerMask.NameToLayer("enemy"), QueryTriggerInteraction.Collide);
-    Debug.Log($"Number of colliders in shoot sound range ({gunNoiseRange}m): {colliders.Length}");
+    Collider[] colliders = Physics.OverlapSphere(transform.position, gunNoiseRange, LayerMask.NameToLayer("Enemy"), QueryTriggerInteraction.Collide);
     foreach (Collider col in colliders)
     {
       Enemy enemy = col.gameObject.GetComponent<Enemy>();

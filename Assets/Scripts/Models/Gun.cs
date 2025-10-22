@@ -223,6 +223,7 @@ public class Gun : NetworkBehaviour
     }
     else if (weaponType == WeaponType.PROJECTILE)
     {
+      this.projectile.layer = LayerMask.NameToLayer("Default");
       GameObject projectile = Instantiate(this.projectile, originPosition, Quaternion.LookRotation(direction));
       NetworkServer.Spawn(projectile);
       projectile.GetComponent<Projectile>().FireBullet(15f);

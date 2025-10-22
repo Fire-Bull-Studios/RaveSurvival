@@ -1,7 +1,9 @@
+using PlasticGui;
 using RaveSurvival;
+using UnityEditor.UIElements;
 using UnityEngine;
 
-public class EnemyAlert: MonoBehaviour
+public class EnemyAlert : MonoBehaviour
 {
   public float alertDistance;
   public LayerMask layers;
@@ -9,7 +11,7 @@ public class EnemyAlert: MonoBehaviour
   // Start is called once before the first execution of Update after the MonoBehaviour is created
   void Start()
   {
-    layers = gameObject.layer;
+    layers = 1 << gameObject.layer;
   }
 
   public void AlertNearEnemies(Transform player)
