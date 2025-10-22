@@ -6,27 +6,27 @@ using Mirror;
 
 namespace RaveSurvival
 {
-	public class Enemy : NetworkBehaviour
-	{
-		public float health = 50f;
-		public float range = 10f;
-		private NavMeshAgent agent;
+  public class Enemy : NetworkBehaviour
+  {
+    public float health = 50f;
+    public float range = 10f;
+    private NavMeshAgent agent;
     private Transform target = null;
     private bool playerSpotted = false;
-		private IEnumerator behaviorCo = null;
-		private bool hitObstacle = false;
+    private IEnumerator behaviorCo = null;
+    private bool hitObstacle = false;
     private EnemyState enemyState = EnemyState.IDLE;
     private EnemyAlert megaphone = null;
     public Gun gun;
 
-		public enum EnemyState
-		{
-			IDLE,
-			WANDER,
-			CHASE,
-			ATTACK,
-			DEAD
-		};
+    public enum EnemyState
+    {
+      IDLE,
+      WANDER,
+      CHASE,
+      ATTACK,
+      DEAD
+    };
 
     public void Start()
     {
@@ -52,8 +52,8 @@ namespace RaveSurvival
       }
     }
 
-		public void ChangeState(EnemyState state)
-		{
+    public void ChangeState(EnemyState state)
+    {
       if (state == enemyState)
       {
         return;
@@ -65,11 +65,10 @@ namespace RaveSurvival
       }
       enemyState = state;
       StartAction();
-		}
-    
-		public void StartAction()
-		{
-      //Debug.Log($"Changing state to {enemyState}");
+    }
+
+    public void StartAction()
+    {
       switch (enemyState)
       {
         case EnemyState.IDLE:
@@ -95,26 +94,26 @@ namespace RaveSurvival
           Debug.LogError($"Invalid state passed ({enemyState}). Kinda cringe if you ask me.");
           break;
       }
-		}
+    }
 
-		public IEnumerator AttackPlayer(Transform player)
-		{
-			float wait = 0.25f;
-			while (true)
-			{
-				if (Vector3.Distance(player.position, transform.position) > range)
-				{
-					MoveToPlayer(player);
-				}
-				else
-				{
-					ShootPlayer(player);
-				}
-				yield return wait;
-			}
-		}
-    
-		public void PlayerSpotted(Transform player)
+    public IEnumerator AttackPlayer(Transform player)
+    {
+      float wait = 0.25f;
+      while (true)
+      {
+        if (Vector3.Distance(player.position, transform.position) > range)
+        {
+          MoveToPlayer(player);
+        }
+        else
+        {
+          ShootPlayer(player);
+        }
+        yield return wait;
+      }
+    }
+
+    public void PlayerSpotted(Transform player)
     {
       playerSpotted = true;
       if (target != player)
@@ -133,7 +132,7 @@ namespace RaveSurvival
         IEnumerator delay = DelayedStop(5f);
         StartCoroutine(delay);
       }
-		}
+    }
 
     public void HitObstacle(bool x)
     {
@@ -148,27 +147,31 @@ namespace RaveSurvival
       }
     }
 
-		private void MoveToPlayer(Transform player)
-		{
-			enemyState = EnemyState.CHASE;
-			transform.LookAt(player);
-			agent.SetDestination(player.position);
-		}
+    private void MoveToPlayer(Transform player)
+    {
+      enemyState = EnemyState.CHASE;
+      transform.LookAt(player);
+      agent.SetDestination(player.position);
+    }
 
-		private void ShootPlayer(Transform player)
-		{
-			enemyState = EnemyState.ATTACK;
-			agent.ResetPath();
-			transform.LookAt(player);
-			if (GameManager.Instance.gameType == GameManager.GameType.OnlineMultiplayer)
-			{
-				gun.OnlineShoot(true);
-			}
-			else
-			{
-				gun.SinglePlayerShoot(true);
-			}
-		}
+    private void ShootPlayer(Transform player)
+    {
+      enemyState = EnemyState.ATTACK;
+      if (agent != null)
+      {
+        agent.ResetPath();
+      }
+      transform.LookAt(player);
+      gun.transform.LookAt(player);
+      if (GameManager.Instance.gameType == GameManager.GameType.OnlineMultiplayer)
+      {
+        gun.OnlineShoot(true);
+      }
+      else
+      {
+        gun.SinglePlayerShoot(true);
+      }
+    }
 
     public void TakeDamage(float dmg, Transform bulletDirection, Vector3 pos)
     {
@@ -181,10 +184,10 @@ namespace RaveSurvival
       }
     }
 
-		private void Die()
-		{
-			Destroy(gameObject);
-		}
+    private void Die()
+    {
+      Destroy(gameObject);
+    }
 
     private IEnumerator DelayedStop(float seconds)
     {
@@ -218,7 +221,7 @@ namespace RaveSurvival
       ChangeState(EnemyState.IDLE);
       yield return null;
     }
-    
+
     private Vector3 setPath()
     {
       float randAngle = UnityEngine.Random.Range(-180f, 180f);
@@ -228,6 +231,6 @@ namespace RaveSurvival
       agent.SetDestination(destination);
       return destination;
     }
-	}
+  }
 }
 
