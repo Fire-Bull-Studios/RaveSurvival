@@ -2,10 +2,16 @@ using UnityEngine;
 using RaveSurvival;
 using System.Collections;
 using Mirror;
-using System;
+using UnityEngine.UIElements;
+using UnityEditor;
 
 public class Spawn : MonoBehaviour
 {
+  public enum SpawnType
+  {
+    spawnPoint = 0,
+    spawnArea
+  }
   public enum SpawnType
   {
     spawnPoint = 0,
@@ -18,11 +24,24 @@ public class Spawn : MonoBehaviour
     enemy,
     boss
   }
+  public enum SpawnUser
+  {
+    player = 0,
+    enemy,
+    boss
+  }
 
   public SpawnType spawnType = SpawnType.spawnPoint;
   public SpawnUser spawnUser = SpawnUser.enemy;
   public float radius = 0f;
 
+  //private Mesh mesh;
+
+  public void SpawnCharacter(GameObject[] entities, float delay = 0.0f)
+  {
+    IEnumerator spawn = SpawnEntity(entities, delay);
+    StartCoroutine(spawn);
+  }
   public void SpawnCharacter(GameObject[] entities, float delay = 0.0f)
   {
     IEnumerator spawn = SpawnEntity(entities, delay);
@@ -33,7 +52,19 @@ public class Spawn : MonoBehaviour
   {
     return spawnUser;
   }
+  public SpawnUser GetSpawnUser()
+  {
+    return spawnUser;
+  }
 
+  IEnumerator SpawnEntity(GameObject[] entities, float delay)
+  {
+    foreach (GameObject entity in entities)
+    {
+      yield return new WaitForSeconds(delay);
+      Temp(entity);
+    }
+  }
   IEnumerator SpawnEntity(GameObject[] entities, float delay)
   {
     foreach (GameObject entity in entities)
@@ -50,5 +81,24 @@ public class Spawn : MonoBehaviour
     {
       NetworkServer.Spawn(character);
     }
+  }
+  // private Mesh CreateSpawnPointMesh()
+  // {
+  //   Mesh temp = new();
+
+  //   return temp;
+  // }
+
+  // private void OnValidate()
+  // {
+  //   mesh = CreateSpawnPointMesh();
+  // }
+
+  void OnDrawGizmos()
+  {
+    Gizmos.color = Color.blueViolet;
+    Gizmos.DrawWireSphere(transform.position, 1f);
+    Gizmos.DrawLine(transform.position, transform.position + transform.forward);
+    //Gizmos.DrawWireMesh(mesh, transform.position, transform.rotation);
   }
 }
