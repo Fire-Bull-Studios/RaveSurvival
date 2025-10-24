@@ -14,9 +14,11 @@ public class Player : NetworkBehaviour
 
   // Transform representing the position of the camera
   public Transform cameraPos;
+  public PlayerUIManager uIManager;
 
   // Player's health value
-  public float health = 50.0f;
+  public float maxHealth = 50.0f;
+  private float health = 0f;
   private float gunNoiseRange = 0f;
 
   /// <summary>
@@ -25,6 +27,7 @@ public class Player : NetworkBehaviour
   /// </summary>
   public void Start()
   {
+    health = maxHealth;
     // Find the first camera in the scene
     Camera camera = FindFirstObjectByType<Camera>();
 
@@ -91,6 +94,9 @@ public class Player : NetworkBehaviour
   {
     // Subtract damage from health
     health -= dmg;
+    int healthPercent = (int)(health / maxHealth * 100);
+    //Debug.Log($"Health percentage: {health / maxHealth}, {health / maxHealth * 100}, {healthPercent}");
+    uIManager.ChangePlayerAttribute(PlayerUIManager.PlayerAttribute.health, healthPercent);
 
     // Check if health has dropped to zero or below
     if (health <= 0)
