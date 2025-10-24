@@ -66,7 +66,7 @@ public class HealthBar : MonoBehaviour
       healthBar.value = currentValue;
       yield return new WaitForSeconds(0.01f);
     }
-    //currentValue = value;
+    currentValue = value;
     yield return null;
   }
 
@@ -90,9 +90,7 @@ public class HealthBar : MonoBehaviour
       fill.color = currentColor;
       yield return new WaitForSeconds(0.1f);
     }
-    //currentColor.r = color.r;
-    //currentColor.g = color.g;
-    //currentColor.b = color.b;
+    currentColor = color;
     yield return null;
   }
 }
