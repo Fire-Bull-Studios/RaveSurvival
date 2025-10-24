@@ -2,6 +2,8 @@ using UnityEngine;
 using RaveSurvival;
 using System.Collections;
 using Mirror;
+using UnityEngine.UIElements;
+using UnityEditor;
 
 public class Spawn : MonoBehaviour
 {
@@ -21,6 +23,8 @@ public class Spawn : MonoBehaviour
   public SpawnType spawnType = SpawnType.spawnPoint;
   public SpawnUser spawnUser = SpawnUser.enemy;
   public float radius = 0f;
+
+  //private Mesh mesh;
 
   public void SpawnCharacter(GameObject[] entities, float delay = 0.0f)
   {
@@ -49,5 +53,24 @@ public class Spawn : MonoBehaviour
     {
       NetworkServer.Spawn(character);
     }
+  }
+  // private Mesh CreateSpawnPointMesh()
+  // {
+  //   Mesh temp = new();
+
+  //   return temp;
+  // }
+
+  // private void OnValidate()
+  // {
+  //   mesh = CreateSpawnPointMesh();
+  // }
+
+  void OnDrawGizmos()
+  {
+    Gizmos.color = Color.blueViolet;
+    Gizmos.DrawWireSphere(transform.position, 1f);
+    Gizmos.DrawLine(transform.position, transform.position + transform.forward);
+    //Gizmos.DrawWireMesh(mesh, transform.position, transform.rotation);
   }
 }
