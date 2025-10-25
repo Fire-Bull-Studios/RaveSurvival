@@ -24,7 +24,7 @@ public class HealthBar : MonoBehaviour
     {
       color = Color.cyan;
     }
-    if (val <= .50 && val > .25)
+    else if (val <= .50 && val > .25)
     {
       color = Color.yellow;
     }
@@ -59,7 +59,7 @@ public class HealthBar : MonoBehaviour
     while (value != currentValue)
     {
       currentValue = Mathf.Lerp(currentValue, value, 0.05f);
-      if (Math.Abs(currentValue - value) < 0.01)
+      if (Math.Abs(currentValue - value) < 0.001)
       {
         currentValue = value;
       }
@@ -67,25 +67,30 @@ public class HealthBar : MonoBehaviour
       yield return new WaitForSeconds(0.01f);
     }
     currentValue = value;
+    if (currentValue < 0)
+    {
+      currentValue = 0;
+      Color temp = fill.color;
+      temp.a = 0;
+      fill.color = temp;
+    }
+    else
+    {
+      healthBar.gameObject.SetActive(true);
+    }
     yield return null;
   }
 
   private IEnumerator ColorAnim(Color color)
   {
-    while (color.r != currentColor.r)
+    while (
+      color.r != currentColor.r &&
+      color.g != currentColor.g &&
+      color.b != currentColor.b
+    )
     {
       currentColor.r = Mathf.Lerp(currentColor.r, color.r, 1f);
-      fill.color = currentColor;
-      yield return new WaitForSeconds(0.1f);
-    }
-    while (color.g != currentColor.g)
-    {
       currentColor.g = Mathf.Lerp(currentColor.g, color.g, 1f);
-      fill.color = currentColor;
-      yield return new WaitForSeconds(0.1f);
-    }
-    while (color.b != currentColor.b)
-    {
       currentColor.b = Mathf.Lerp(currentColor.b, color.b, 1f);
       fill.color = currentColor;
       yield return new WaitForSeconds(0.1f);

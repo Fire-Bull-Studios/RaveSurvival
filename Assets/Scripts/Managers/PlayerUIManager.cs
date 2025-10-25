@@ -13,6 +13,7 @@ public class PlayerUIManager : MonoBehaviour
   }
 
   public HealthBar healthBar;
+  public DamageEffectHandler dmgFxHandler;
   // Start is called once before the first execution of Update after the MonoBehaviour is created
   void Start()
   {
@@ -29,20 +30,15 @@ public class PlayerUIManager : MonoBehaviour
   {
     switch (attribute)
     {
-      case PlayerAttribute.health:
-        changeHealth(value);
-        break;
       default:
         break;
     }
   }
 
-  private void changeHealth(int value)
+  public void TakeDamage(float value)
   {
-    float health = ((float)value) / 100f;
-    Debug.Log($"health: {health}");
-    healthBar.HandleHealthChange(health);
-    // TODO
+    healthBar.HandleHealthChange(value);
+    dmgFxHandler.CreateDamageFx();
   }
 
   private void switchToDeathScene()

@@ -94,9 +94,9 @@ public class Player : NetworkBehaviour
   {
     // Subtract damage from health
     health -= dmg;
-    int healthPercent = (int)(health / maxHealth * 100);
+    float healthPercent = health / maxHealth;
     //Debug.Log($"Health percentage: {health / maxHealth}, {health / maxHealth * 100}, {healthPercent}");
-    uIManager.ChangePlayerAttribute(PlayerUIManager.PlayerAttribute.health, healthPercent);
+    uIManager.TakeDamage(healthPercent);
 
     // Check if health has dropped to zero or below
     if (health <= 0)
