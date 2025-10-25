@@ -66,6 +66,10 @@ namespace RaveSurvival
             {
                 StartTrack();
             }
+            else if (track != null && playOnStart && isPlaying)
+            {
+                //other speakers need to play
+            }
         }
 
         public void Unregister(Speaker s) => speakers.Remove(s);
