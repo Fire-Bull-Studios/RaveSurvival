@@ -224,7 +224,7 @@ MonoBehaviour:
   syncInterval: 0
   damage: 10
   range: 100
-  fireRate: 15
+  fireRate: 8
   soundRange: 25
   weaponType: 0
   bulletStart: {fileID: 2470198516893144322}

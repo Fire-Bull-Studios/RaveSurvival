@@ -10,6 +10,7 @@ public class Gun : NetworkBehaviour
   public float fireRate = 15f;
   public float soundRange = 100f;
   private float nextTimeToFire = 0f;
+  private bool canShoot = true;
 
   public WeaponType weaponType = WeaponType.RAYCAST;
 
@@ -71,27 +72,31 @@ public class Gun : NetworkBehaviour
       return;
     }
 
-    if (GameManager.Instance.gameType == GameManager.GameType.OnlineMultiplayer && !isLocalPlayer)
+    if (canShoot)
     {
-      return;
-    }
-
-    if (Input.GetButton("Fire1") && Time.time >= nextTimeToFire)
-    {
-      nextTimeToFire = Time.time + (1f / fireRate);
-      if (GameManager.Instance.gameType == GameManager.GameType.OnlineMultiplayer)
+      if (GameManager.Instance.gameType == GameManager.GameType.OnlineMultiplayer && !isLocalPlayer)
       {
-        OnlineShoot(false);
+        return;
       }
-      else if (GameManager.Instance.gameType == GameManager.GameType.SinglePlayer)
+
+      if (Input.GetButton("Fire1") && Time.time >= nextTimeToFire)
       {
-        if (LayerMask.LayerToName(this.gameObject.layer) == "Player")
+        //nextTimeToFire = Time.time + (1f / fireRate);
+        if (GameManager.Instance.gameType == GameManager.GameType.OnlineMultiplayer)
         {
-          SinglePlayerShoot(false);
-          this.gameObject.GetComponentInParent<Player>().AlertNearEnemies();
+          OnlineShoot(false);
+        }
+        else if (GameManager.Instance.gameType == GameManager.GameType.SinglePlayer)
+        {
+          if (LayerMask.LayerToName(this.gameObject.layer) == "Player")
+          {
+            SinglePlayerShoot(false);
+            this.gameObject.GetComponentInParent<Player>().AlertNearEnemies();
+          }
         }
       }
     }
+
   }
 
   public void SetBulletStart(Transform start)
@@ -156,21 +161,13 @@ public class Gun : NetworkBehaviour
     Vector3 originPosition = bulletStart.position;
     Vector3 direction = bulletStart.forward;
 
-    if (isEnemy)
+    if (Time.time < nextTimeToFire)
     {
-      if (Time.time < nextTimeToFire)
-      {
-        return;
-      }
-      nextTimeToFire = Time.time + (1f / fireRate);
-      LocalShoot(originPosition, direction);
       return;
     }
-    else
-    {
-      LocalShoot(originPosition, direction);
-    }
-
+    nextTimeToFire = Time.time + (1f / fireRate);
+    LocalShoot(originPosition, direction);
+    return;
   }
 
   void LocalShoot(Vector3 originPosition, Vector3 direction)
@@ -281,5 +278,10 @@ public class Gun : NetworkBehaviour
     }
     audioSource.Play();
     muzzleFlash.Play();
+  }
+
+  public void SetCanShoot(bool x)
+  {
+    canShoot = x;
   }
 }
