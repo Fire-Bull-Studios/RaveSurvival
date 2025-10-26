@@ -15,6 +15,8 @@ public class Player : NetworkBehaviour
   // Transform representing the position of the camera
   public Transform cameraPos;
   public PlayerUIManager uIManager;
+  public PlayerMoveHandler moveHandler;
+  public PlayerLookHandler lookHandler;
 
   // Player's health value
   public float maxHealth = 50.0f;
@@ -102,6 +104,10 @@ public class Player : NetworkBehaviour
     if (health <= 0)
     {
       health = 0; // Ensure health doesn't go negative
+      uIManager.SwitchToDeathScene();
+      moveHandler.SetCanMove(false);
+      lookHandler.SetCanLook(false);
+      gun.SetCanShoot(false);
       Debug.Log("You were just killed by: " + killedBy);
     }
   }

@@ -14,6 +14,7 @@ public class PlayerUIManager : MonoBehaviour
 
   public HealthBar healthBar;
   public DamageEffectHandler dmgFxHandler;
+  public GameObject deathScreen;
   // Start is called once before the first execution of Update after the MonoBehaviour is created
   void Start()
   {
@@ -41,9 +42,9 @@ public class PlayerUIManager : MonoBehaviour
     dmgFxHandler.CreateDamageFx();
   }
 
-  private void switchToDeathScene()
+  public void SwitchToDeathScene()
   {
-    // TODO
+    deathScreen.SetActive(true);
   }
 
   private void changeAmmo()

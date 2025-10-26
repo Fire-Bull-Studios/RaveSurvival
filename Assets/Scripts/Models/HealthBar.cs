@@ -67,7 +67,7 @@ public class HealthBar : MonoBehaviour
       yield return new WaitForSeconds(0.01f);
     }
     currentValue = value;
-    if (currentValue < 0)
+    if (currentValue <= 0)
     {
       currentValue = 0;
       Color temp = fill.color;

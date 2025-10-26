@@ -34,6 +34,8 @@ namespace RaveSurvival
     // Boolean to check if the player is grounded
     bool isGrounded;
 
+    private bool canMove = true;
+
     /// <summary>
     /// Unity's Update method, called once per frame.
     /// Handles player movement and jumping for the local player.
@@ -45,20 +47,22 @@ namespace RaveSurvival
         Debug.LogError("Error... GameManager is null when trying to move player...");
         return;
       }
-
-      if (GameManager.Instance.gameType == GameManager.GameType.OnlineMultiplayer)
+      
+      if (canMove)
       {
-        // Ensure the movement logic only applies to the local player
-        if (isLocalPlayer)
+        if (GameManager.Instance.gameType == GameManager.GameType.OnlineMultiplayer)
+        {
+          // Ensure the movement logic only applies to the local player
+          if (isLocalPlayer)
+          {
+            PlayerMove();
+          }
+        }
+        else if (GameManager.Instance.gameType == GameManager.GameType.SinglePlayer)
         {
           PlayerMove();
         }
       }
-      else if (GameManager.Instance.gameType == GameManager.GameType.SinglePlayer)
-      {
-        PlayerMove();
-      }
-
     }
 
     void PlayerMove()
@@ -95,6 +99,9 @@ namespace RaveSurvival
       // Apply the vertical velocity to the player
       controller.Move(velocity * Time.deltaTime);
     }
-
+    public void SetCanMove(bool x)
+    {
+      canMove = x;
+    }
   }
 }

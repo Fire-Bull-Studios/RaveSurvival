@@ -191,6 +191,8 @@ MonoBehaviour:
   gun: {fileID: 5846573979434419769}
   cameraPos: {fileID: 6601766637005990088}
   uIManager: {fileID: 1680734597953637894}
+  moveHandler: {fileID: 4926321888444795909}
+  lookHandler: {fileID: 1845370260724861654}
   maxHealth: 50
 --- !u!136 &7820276712990384745
 CapsuleCollider:
