@@ -9,6 +9,7 @@ public class Gun : NetworkBehaviour
   public float range = 100f;
   public float fireRate = 15f;
   public float soundRange = 100f;
+  public float velocity = 15f;
   private float nextTimeToFire = 0f;
   private bool canShoot = true;
 
@@ -192,7 +193,7 @@ public class Gun : NetworkBehaviour
     else if (weaponType == WeaponType.PROJECTILE)
     {
       GameObject projectile = Instantiate(this.projectile, originPosition, Quaternion.LookRotation(direction));
-      projectile.GetComponent<Projectile>().FireBullet(15f);
+      projectile.GetComponent<Projectile>().FireBullet(velocity);
     }
   }
 
@@ -223,7 +224,7 @@ public class Gun : NetworkBehaviour
       this.projectile.layer = LayerMask.NameToLayer("Default");
       GameObject projectile = Instantiate(this.projectile, originPosition, Quaternion.LookRotation(direction));
       NetworkServer.Spawn(projectile);
-      projectile.GetComponent<Projectile>().FireBullet(15f);
+      projectile.GetComponent<Projectile>().FireBullet(velocity);
     }
   }
 
@@ -251,7 +252,7 @@ public class Gun : NetworkBehaviour
     {
       GameObject projectile = Instantiate(this.projectile, originPosition, Quaternion.LookRotation(direction));
       NetworkServer.Spawn(projectile);
-      projectile.GetComponent<Projectile>().FireBullet(15f);
+      projectile.GetComponent<Projectile>().FireBullet(velocity);
     }
   }
 

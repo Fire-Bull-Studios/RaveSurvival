@@ -77,12 +77,12 @@ namespace RaveSurvival
 
         public IEnumerator SpawnEnemies()
         {
-            yield return new WaitForSeconds(5.0f);
+            yield return new WaitForSeconds(3.0f);
             foreach (Spawn spawnPoint in enemySpawnPoints)
             {
-                yield return new WaitForSeconds(2.0f);
+                yield return new WaitForSeconds(1.0f);
                 GameObject[] temp = { enemyPrefab };
-                spawnPoint.SpawnCharacter(temp, 2.0f);
+                spawnPoint.SpawnCharacter(temp, 0.5f);
             }
         }
     }
