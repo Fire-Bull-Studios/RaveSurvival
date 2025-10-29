@@ -9,7 +9,8 @@ namespace RaveSurvival
   public class Enemy : NetworkBehaviour
   {
     public float health = 50f;
-    public float range = 10f;
+    public float shootRange;
+    public float walkRange;
     private NavMeshAgent agent;
     private Transform target = null;
     private bool playerSpotted = false;
@@ -101,11 +102,19 @@ namespace RaveSurvival
       float wait = 0.25f;
       while (true)
       {
-        if (Vector3.Distance(player.position, transform.position) > range)
+        if (Vector3.Distance(player.position, transform.position) > walkRange)
         {
           MoveToPlayer(player);
         }
         else
+        {
+          if (agent != null && agent.isOnNavMesh)
+          {
+            agent.ResetPath();
+          }
+        }
+
+        if (Vector3.Distance(player.position, transform.position) <= shootRange)
         {
           ShootPlayer(player);
         }
@@ -149,18 +158,13 @@ namespace RaveSurvival
 
     private void MoveToPlayer(Transform player)
     {
-      enemyState = EnemyState.CHASE;
+      //enemyState = EnemyState.CHASE;
       transform.LookAt(player);
       agent.SetDestination(player.position);
     }
 
     private void ShootPlayer(Transform player)
     {
-      enemyState = EnemyState.ATTACK;
-      if (agent != null)
-      {
-        agent.ResetPath();
-      }
       transform.LookAt(player);
       gun.transform.LookAt(player);
       if (GameManager.Instance.gameType == GameManager.GameType.OnlineMultiplayer)
@@ -201,14 +205,12 @@ namespace RaveSurvival
 
     private IEnumerator BecomeIdle()
     {
-      //Debug.Log($"{gameObject.name} become idle");
       yield return new WaitForSeconds(5f);
       ChangeState(EnemyState.WANDER);
     }
 
     private IEnumerator Wander()
     {
-      //Debug.Log($"{gameObject.name} start wandering");
       Vector3 destination = setPath();
       while (gameObject.transform.position != destination)
       {
