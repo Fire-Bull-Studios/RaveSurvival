@@ -14,7 +14,7 @@ namespace RaveSurvival
         public bool playOnStart = true;
 
         [Header("Analysis")]
-        public AudioMixerGroup musicMixerGroup;  
+        public AudioMixerGroup analysisMixerGroup;  
         public AudioAnalyzer analyzer;
 
         [SerializeField]
@@ -40,7 +40,7 @@ namespace RaveSurvival
 
             // Build analysis source
             analysisSource = gameObject.AddComponent<AudioSource>();
-            analysisSource.outputAudioMixerGroup = musicMixerGroup;
+            analysisSource.outputAudioMixerGroup = analysisMixerGroup;
             //analysisSource.loop = true;
             analysisSource.playOnAwake = false;
             // 2D sound
@@ -84,6 +84,7 @@ namespace RaveSurvival
             foreach (Speaker s in speakers)
             {
                 AudioSource src = s.source;
+                DebugManager.Instance.Print(s.source.gameObject.name, DebugManager.DebugLevel.Paul);
                 src.clip = track;
                 //src.loop = true;
                 src.PlayScheduled(DspStartTime);

@@ -1234,14 +1234,17 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2818008958907798441, guid: a45fc43e58f512b4697f6947d8331da5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1974106588}
   m_SourcePrefab: {fileID: 100100000, guid: a45fc43e58f512b4697f6947d8331da5, type: 3}
 --- !u!114 &839438400 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3857392765426940989, guid: a45fc43e58f512b4697f6947d8331da5, type: 3}
   m_PrefabInstance: {fileID: 839438396}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1974106583}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 312f3d403b7a98d44bb5c099b0e65df4, type: 3}
@@ -2857,6 +2860,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1946407336}
   m_CullTransparentMesh: 1
+--- !u!1 &1974106583 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2818008958907798441, guid: a45fc43e58f512b4697f6947d8331da5, type: 3}
+  m_PrefabInstance: {fileID: 839438396}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1974106588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1974106583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec20785f3edb9f544a350c174c76a56e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: RaveSurvival::RaveSurvival.DebugManager
+  debugLevel: 3
 --- !u!1 &1987834631
 GameObject:
   m_ObjectHideFlags: 0

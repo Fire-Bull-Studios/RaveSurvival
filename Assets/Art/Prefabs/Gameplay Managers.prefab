@@ -53,6 +53,7 @@ MonoBehaviour:
   syncInterval: 0
   players: []
   gameType: 0
+  difficulty: 0
   starterScene: Test Stage
 --- !u!114 &1391821692881943137
 MonoBehaviour:
@@ -154,7 +155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   track: {fileID: 0}
   playOnStart: 1
-  musicMixerGroup: {fileID: 2097211023299333283, guid: 33e3a85a1acb8474b9f906958d7655a3, type: 2}
+  analysisMixerGroup: {fileID: 4231383076239981002, guid: 33e3a85a1acb8474b9f906958d7655a3, type: 2}
   analyzer: {fileID: 8720265164588296883}
   analysisSource: {fileID: 0}
 --- !u!114 &8720265164588296883
