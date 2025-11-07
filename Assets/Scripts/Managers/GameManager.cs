@@ -64,7 +64,7 @@ namespace RaveSurvival
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            Debug.Log($"Scene name: {scene.name}; Starter name: {starterScene}");
+            DebugManager.Instance.Print($"Scene name: {scene.name}; Starter name: {starterScene}", DebugManager.DebugLevel.Verbose);
             if (scene.name == starterScene)
             {
                 SpawnManager.Instance.FindSpawnPoints();

@@ -17,9 +17,10 @@ namespace RaveSurvival
         public AudioMixerGroup analysisMixerGroup;  
         public AudioAnalyzer analyzer;
 
-        [SerializeField]
         private AudioSource analysisSource;
-        private readonly List<Speaker> speakers = new();
+
+        [SerializeField]
+        private List<Speaker> speakers = new();
         private bool isPlaying = false;
         //private int masterSamples = 0;
 
@@ -48,27 +49,15 @@ namespace RaveSurvival
             analysisSource.volume = 1f;
         }
 
-        void Start()
-        {
-            if (track != null && playOnStart)
-            {
-                StartTrack();
-            }
-        }
-
         public void Register(Speaker s)
         {
             if (!speakers.Contains(s))
             {
                 speakers.Add(s);
             }
-            if (track != null && playOnStart && !isPlaying)
+            if (track != null && playOnStart)
             {
                 StartTrack();
-            }
-            else if (track != null && playOnStart && isPlaying)
-            {
-                //other speakers need to play
             }
         }
 
@@ -76,7 +65,7 @@ namespace RaveSurvival
 
         public void StartTrack()
         {
-            if (isPlaying || track == null || speakers.Count == 0)
+            if (track == null || speakers.Count == 0)
             {
                 return;
             }
