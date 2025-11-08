@@ -848,6 +848,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1401526217512582, guid: 491bb644353c3c74bb87a6ce311392ff, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1588319096}
     - targetCorrespondingSourceObject: {fileID: 3100447037180434029, guid: 491bb644353c3c74bb87a6ce311392ff, type: 3}
       insertIndex: -1
       addedObject: {fileID: 743244785}
@@ -937,6 +940,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4342671295866887495, guid: 27f210ed52b6c0f409f410ac194d0a7c, type: 3}
   m_PrefabInstance: {fileID: 174570359}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &190990607 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1401526217512582, guid: 491bb644353c3c74bb87a6ce311392ff, type: 3}
+  m_PrefabInstance: {fileID: 1521574591}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &256283399
 PrefabInstance:
@@ -1403,6 +1411,11 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!1 &385603028 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1401526217512582, guid: 491bb644353c3c74bb87a6ce311392ff, type: 3}
+  m_PrefabInstance: {fileID: 570637783}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &458424848
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1707,6 +1720,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1401526217512582, guid: 491bb644353c3c74bb87a6ce311392ff, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 570637787}
     - targetCorrespondingSourceObject: {fileID: 3100447037180434029, guid: 491bb644353c3c74bb87a6ce311392ff, type: 3}
       insertIndex: -1
       addedObject: {fileID: 145285998}
@@ -1719,6 +1735,21 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4291481014059686, guid: 491bb644353c3c74bb87a6ce311392ff, type: 3}
   m_PrefabInstance: {fileID: 570637783}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &570637787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 385603028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e4bf9a0b638e8b43a20ce92e4c1babc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: RaveSurvival::RaveSurvival.StageLightRotationHandler
+  rotationSpeed: 20
+  maxRotationOffset: 5
+  changeInterval: 2
 --- !u!1001 &583725730
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2164,6 +2195,16 @@ MonoBehaviour:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1034158692652860, guid: d6953beccd5569044a00f65e89680473, type: 3}
   m_PrefabInstance: {fileID: 1542820334}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &749855392 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1401526217512582, guid: 491bb644353c3c74bb87a6ce311392ff, type: 3}
+  m_PrefabInstance: {fileID: 5265925883337281137}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &753945390 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1401526217512582, guid: 491bb644353c3c74bb87a6ce311392ff, type: 3}
+  m_PrefabInstance: {fileID: 1461421139}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &757542058 stripped
 GameObject:
@@ -4380,6 +4421,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1401526217512582, guid: 491bb644353c3c74bb87a6ce311392ff, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1461421143}
     - targetCorrespondingSourceObject: {fileID: 3100447037180434029, guid: 491bb644353c3c74bb87a6ce311392ff, type: 3}
       insertIndex: -1
       addedObject: {fileID: 724153327}
@@ -4392,6 +4436,21 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4291481014059686, guid: 491bb644353c3c74bb87a6ce311392ff, type: 3}
   m_PrefabInstance: {fileID: 1461421139}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1461421143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 753945390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e4bf9a0b638e8b43a20ce92e4c1babc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: RaveSurvival::RaveSurvival.StageLightRotationHandler
+  rotationSpeed: 20
+  maxRotationOffset: 5
+  changeInterval: 2
 --- !u!1 &1470369995
 GameObject:
   m_ObjectHideFlags: 0
@@ -4671,6 +4730,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1401526217512582, guid: 491bb644353c3c74bb87a6ce311392ff, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1521574595}
     - targetCorrespondingSourceObject: {fileID: 3100447037180434029, guid: 491bb644353c3c74bb87a6ce311392ff, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1160236691}
@@ -4683,6 +4745,21 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4291481014059686, guid: 491bb644353c3c74bb87a6ce311392ff, type: 3}
   m_PrefabInstance: {fileID: 1521574591}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1521574595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 190990607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e4bf9a0b638e8b43a20ce92e4c1babc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: RaveSurvival::RaveSurvival.StageLightRotationHandler
+  rotationSpeed: 20
+  maxRotationOffset: 5
+  changeInterval: 2
 --- !u!1001 &1533825930
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5389,6 +5466,26 @@ MonoBehaviour:
   occlusionLowpassCutoff: 800
   clearLowpassCutoff: 22000
   occlusionCheckInterval: 0.1
+--- !u!1 &1588319093 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1401526217512582, guid: 491bb644353c3c74bb87a6ce311392ff, type: 3}
+  m_PrefabInstance: {fileID: 168458863}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1588319096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1588319093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e4bf9a0b638e8b43a20ce92e4c1babc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: RaveSurvival::RaveSurvival.StageLightRotationHandler
+  rotationSpeed: 20
+  maxRotationOffset: 5
+  changeInterval: 2
 --- !u!1001 &1589410980
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8191,6 +8288,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1401526217512582, guid: 491bb644353c3c74bb87a6ce311392ff, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5265925883337281141}
     - targetCorrespondingSourceObject: {fileID: 3100447037180434029, guid: 491bb644353c3c74bb87a6ce311392ff, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1324846735}
@@ -8203,6 +8303,21 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4291481014059686, guid: 491bb644353c3c74bb87a6ce311392ff, type: 3}
   m_PrefabInstance: {fileID: 5265925883337281137}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5265925883337281141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 749855392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e4bf9a0b638e8b43a20ce92e4c1babc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: RaveSurvival::RaveSurvival.StageLightRotationHandler
+  rotationSpeed: 20
+  maxRotationOffset: 5
+  changeInterval: 2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
