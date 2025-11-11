@@ -22,7 +22,17 @@ namespace RaveSurvival
 
         };
 
+        public enum Difficulty
+        {
+            Peaceful,
+            Easy,
+            Medium,
+            Hard,
+            Excision
+        }
+
         public GameType gameType;
+        public Difficulty difficulty;
 
         public string starterScene;
 
@@ -54,12 +64,15 @@ namespace RaveSurvival
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            Debug.Log($"Scene name: {scene.name}; Starter name: {starterScene}");
+            DebugManager.Instance.Print($"Scene name: {scene.name}; Starter name: {starterScene}", DebugManager.DebugLevel.Verbose);
             if (scene.name == starterScene)
             {
                 SpawnManager.Instance.FindSpawnPoints();
                 SpawnManager.Instance.SpawnPlayers(gameType);
-                StartCoroutine(SpawnManager.Instance.SpawnEnemies());
+                if (difficulty != Difficulty.Peaceful)
+                { 
+                    StartCoroutine(SpawnManager.Instance.SpawnEnemies());
+                }
 
                 //Music
                 MusicManager.Instance.SetSong(MusicManager.Instance.tracks.ToArray()[0]);

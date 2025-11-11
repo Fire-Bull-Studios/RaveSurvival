@@ -14,12 +14,13 @@ namespace RaveSurvival
         public bool playOnStart = true;
 
         [Header("Analysis")]
-        public AudioMixerGroup musicMixerGroup;  
+        public AudioMixerGroup analysisMixerGroup;  
         public AudioAnalyzer analyzer;
 
-        [SerializeField]
         private AudioSource analysisSource;
-        private readonly List<Speaker> speakers = new();
+
+        [SerializeField]
+        private List<Speaker> speakers = new();
         private bool isPlaying = false;
         //private int masterSamples = 0;
 
@@ -40,20 +41,12 @@ namespace RaveSurvival
 
             // Build analysis source
             analysisSource = gameObject.AddComponent<AudioSource>();
-            analysisSource.outputAudioMixerGroup = musicMixerGroup;
+            analysisSource.outputAudioMixerGroup = analysisMixerGroup;
             //analysisSource.loop = true;
             analysisSource.playOnAwake = false;
             // 2D sound
             analysisSource.spatialBlend = 0f; 
             analysisSource.volume = 1f;
-        }
-
-        void Start()
-        {
-            if (track != null && playOnStart)
-            {
-                StartTrack();
-            }
         }
 
         public void Register(Speaker s)
@@ -62,7 +55,7 @@ namespace RaveSurvival
             {
                 speakers.Add(s);
             }
-            if (track != null && playOnStart && !isPlaying)
+            if (track != null && playOnStart)
             {
                 StartTrack();
             }
@@ -72,23 +65,52 @@ namespace RaveSurvival
 
         public void StartTrack()
         {
-            if (isPlaying || track == null || speakers.Count == 0)
+            if (track == null || speakers.Count == 0)
             {
                 return;
             }
-            DspStartTime = AudioSettings.dspTime + 0.05;
+        
+            // Get DSP timing info and buffer size so we can align start to buffer boundary
+            int dspBufferSize, dspNumBuffers;
+            AudioSettings.GetDSPBufferSize(out dspBufferSize, out dspNumBuffers);
+            int sampleRate = AudioSettings.outputSampleRate;
+        
+            // Give the audio system a bit more lead time to schedule sources reliably
+            double leadTime = 0.12; // seconds (increase if you still see jitter)
+            double desiredStart = AudioSettings.dspTime + leadTime;
+        
+            // Align to next DSP buffer boundary to avoid sample misalignment jitter
+            double secondsPerBuffer = (double)dspBufferSize / sampleRate;
+            double remainder = desiredStart % secondsPerBuffer;
+            if (remainder > 0.0)
+            {
+                desiredStart += secondsPerBuffer - remainder;
+            }
+        
+            DspStartTime = desiredStart;
+        
+            // Ensure each source is stopped / reset and scheduled at the exact same DSP time
             foreach (Speaker s in speakers)
             {
                 AudioSource src = s.source;
+                src.Stop();
                 src.clip = track;
-                //src.loop = true;
+                src.timeSamples = 0;
+                // Optional: ensure loop/playOnAwake states consistent across sources
+                // src.loop = true;
                 src.PlayScheduled(DspStartTime);
+                DebugManager.Instance.Print(src.gameObject.name, DebugManager.DebugLevel.Paul);
             }
-
+        
+            analysisSource.Stop();
             analysisSource.clip = track;
+            analysisSource.timeSamples = 0;
             analysisSource.PlayScheduled(DspStartTime);
-
+        
             isPlaying = true;
+        
+            // Notify listeners the song is scheduled to start at DspStartTime
+            OnSongStarted?.Invoke(DspStartTime);
         }
 
         public AudioSource GetAnalysisSource() => analysisSource;

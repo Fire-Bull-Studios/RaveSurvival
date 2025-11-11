@@ -35,6 +35,7 @@ namespace RaveSurvival
                 Speaker[] speakers = FindObjectsByType<Speaker>(FindObjectsSortMode.None);
                 foreach (Speaker s in speakers)
                 {
+                    DebugManager.Instance.Print($"Registering speaker {s.gameObject.name}", DebugManager.DebugLevel.Paul);
                     MusicConductor.Instance.Register(s);
                 }
             }

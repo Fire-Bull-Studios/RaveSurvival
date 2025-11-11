@@ -1179,10 +1179,6 @@ PrefabInstance:
       propertyPath: sceneId
       value: 2541213280
       objectReference: {fileID: 0}
-    - target: {fileID: 2489925265991966394, guid: a45fc43e58f512b4697f6947d8331da5, type: 3}
-      propertyPath: enemyPrefab
-      value: 
-      objectReference: {fileID: 8485471596439444230, guid: 77e7c10987825ef4e8c5b38fd06be399, type: 3}
     - target: {fileID: 2818008958907798441, guid: a45fc43e58f512b4697f6947d8331da5, type: 3}
       propertyPath: m_Name
       value: Gameplay Managers
@@ -1228,8 +1224,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3857392765426940989, guid: a45fc43e58f512b4697f6947d8331da5, type: 3}
-      propertyPath: starterScene
-      value: DubstepDungeonNF
+      propertyPath: difficulty
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6015709953315835475, guid: a45fc43e58f512b4697f6947d8331da5, type: 3}
+      propertyPath: debugLevel
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
