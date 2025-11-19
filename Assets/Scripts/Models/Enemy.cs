@@ -6,7 +6,7 @@ using Mirror;
 
 namespace RaveSurvival
 {
-  public class Enemy : NetworkBehaviour
+  public class Enemy : Entity
   {
     public float health = 50f;
     public float shootRange;
@@ -29,7 +29,7 @@ namespace RaveSurvival
       DEAD
     };
 
-    public void Start()
+    public override void Start()
     {
       agent = GetComponent<NavMeshAgent>();
       megaphone = GetComponent<EnemyAlert>();
@@ -169,11 +169,11 @@ namespace RaveSurvival
       gun.transform.LookAt(player);
       if (GameManager.Instance.gameType == GameManager.GameType.OnlineMultiplayer)
       {
-        gun.OnlineShoot(true);
+        gun.OnlineFire(Time.time);
       }
       else
       {
-        gun.SinglePlayerShoot(true);
+        gun.Fire(Time.time);
       }
     }
 

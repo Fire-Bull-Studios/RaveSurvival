@@ -23,6 +23,8 @@ public class Player : NetworkBehaviour
   private float health = 0f;
   private float gunNoiseRange = 0f;
 
+  private bool canShoot = true;
+
   /// <summary>
   /// Unity's Start method, called before the first frame update.
   /// Sets up the camera for the local player and links it to the gun.
@@ -83,7 +85,26 @@ public class Player : NetworkBehaviour
   /// </summary>
   void Update()
   {
-    // Placeholder for future update logic
+    if (canShoot)
+    {
+      if (GameManager.Instance.gameType == GameManager.GameType.OnlineMultiplayer && !isLocalPlayer)
+      {
+        return;
+      }
+
+      if (Input.GetButton("Fire1"))
+      {
+        if (GameManager.Instance.gameType == GameManager.GameType.OnlineMultiplayer)
+        {
+          gun.OnlineFire(Time.time);
+        }
+        else if (GameManager.Instance.gameType == GameManager.GameType.SinglePlayer)
+        {
+          gun.Fire(Time.time);
+          AlertNearEnemies();
+        }
+      }
+    }
   }
 
   /// <summary>
