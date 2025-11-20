@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 197303527e7a44942bc94aa368e2f4da
+timeCreated: 1548889338
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 61490
+  packageName: 'PISTOL Starter: MoCap Animation Pack'
+  packageVersion: V2.7A1
+  assetPath: Assets/Pistol 27A Starter/MotusMan/Materials/1911.mat
+  uploadId: 309537
