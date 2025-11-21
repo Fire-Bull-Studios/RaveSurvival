@@ -110,7 +110,9 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  health: 50
+  weapon: {fileID: 5724358653646386850, guid: 79aa49074244e9348a29a5c66c8d77a9, type: 3}
+  maxHealth: 50
+  health: 0
   shootRange: 35
   walkRange: 13
   gun: {fileID: 5503811084742342423}

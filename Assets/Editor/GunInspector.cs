@@ -35,7 +35,7 @@ public class GunInspector : Editor
     fireRate = new("FireRate") { bindingPath = "fireRate" };
     soundRange = new("Sound Range") { bindingPath = "soundRange" };
     velocity = new("Velocity") { bindingPath = "velocity" };
-    weaponType = new("Weapon Type") { bindingPath = "weaponType" };
+    weaponType = new("Bullet Type") { bindingPath = "bulletType" };
     fireSound = new("Fire Sound") { bindingPath = "fireSound" };
     bulletStart = new("Bullet Start") { bindingPath = "bulletStart" };
     muzzleFlash = new("Muzzle Flash") { bindingPath = "muzzleFlash" };
@@ -67,7 +67,7 @@ public class GunInspector : Editor
   {
     EnumField field = evt.currentTarget as EnumField;
 
-    if (field.value.Equals(Gun.WeaponType.PROJECTILE))
+    if (field.value.Equals(Gun.BulletType.PROJECTILE))
     {
       myInspector.Remove(impactEffect);
       myInspector.Add(projectile);

@@ -1,3 +1,4 @@
+using System;
 using Mirror;
 using NUnit.Framework.Constraints;
 using RaveSurvival;
@@ -6,8 +7,9 @@ using UnityEngine.SocialPlatforms;
 
 public class Gun : Weapon
 {
-  public float soundRange = 100f;
   public float velocity = 15f;
+  public float fireRate = 15f;
+
   private float nextTimeToFire = 0f;
   private bool canShoot = true;
 
@@ -20,7 +22,6 @@ public class Gun : Weapon
 
   public GameObject projectile;
 
-  private AudioSource audioSource;
   public AudioClip fireSound;
   public enum BulletType
   {
@@ -28,7 +29,6 @@ public class Gun : Weapon
     PROJECTILE
   }
 
-  private bool isReady = false;
 
   public override void Awake()
   {
@@ -123,8 +123,6 @@ public class Gun : Weapon
       Vector3 originPosition = bulletStart.position;
       Vector3 direction = bulletStart.forward;
 
-      nextTimeToFire = Time.time + (1f / fireRate);
-
       PlayMuzzleFlash();
       if (bulletType == BulletType.RAYCAST)
       {
@@ -135,7 +133,7 @@ public class Gun : Weapon
           Enemy enemy = hit.transform.GetComponent<Enemy>();
           if (enemy != null)
           {
-            enemy.TakeDamage(damage, bulletStart, originPosition);
+            enemy.TakeDamage(damage, bulletStart, originPosition, enemy);
           }
 
           GameObject impactFx = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
@@ -145,10 +143,14 @@ public class Gun : Weapon
       else if (bulletType == BulletType.PROJECTILE)
       {
         GameObject projectile = Instantiate(this.projectile, originPosition, Quaternion.LookRotation(direction));
-        projectile.GetComponent<Projectile>().FireBullet(velocity);
+        projectile.GetComponent<Projectile>().FireBullet(velocity, owner);
       }
 
-      nextTimeToFire = currentTime + fireRate;
+        nextTimeToFire = currentTime + (1f / fireRate);
+    }
+    else
+    {
+      //Do nothing
     }
 
     return;
@@ -169,7 +171,7 @@ public class Gun : Weapon
         Enemy enemy = hit.transform.GetComponent<Enemy>();
         if (enemy != null)
         {
-          enemy.TakeDamage(damage, bulletStart, originPosition);
+          enemy.TakeDamage(damage, bulletStart, originPosition, enemy);
         }
 
         GameObject impactFx = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
@@ -181,7 +183,7 @@ public class Gun : Weapon
       this.projectile.layer = LayerMask.NameToLayer("Default");
       GameObject projectile = Instantiate(this.projectile, originPosition, Quaternion.LookRotation(direction));
       NetworkServer.Spawn(projectile);
-      projectile.GetComponent<Projectile>().FireBullet(velocity);
+      projectile.GetComponent<Projectile>().FireBullet(velocity, owner);
     }
   }
 
@@ -198,7 +200,7 @@ public class Gun : Weapon
         Enemy enemy = hit.transform.GetComponent<Enemy>();
         if (enemy != null)
         {
-          enemy.TakeDamage(damage, bulletStart, originPosition);
+          enemy.TakeDamage(damage, bulletStart, originPosition, enemy);
         }
 
         GameObject impactFx = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
@@ -209,7 +211,7 @@ public class Gun : Weapon
     {
       GameObject projectile = Instantiate(this.projectile, originPosition, Quaternion.LookRotation(direction));
       NetworkServer.Spawn(projectile);
-      projectile.GetComponent<Projectile>().FireBullet(velocity);
+      projectile.GetComponent<Projectile>().FireBullet(velocity, owner);
     }
   }
 

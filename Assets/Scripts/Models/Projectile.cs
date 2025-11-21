@@ -8,6 +8,7 @@ public class Projectile : NetworkBehaviour
 	private Rigidbody rb;
 	[SerializeField]
 	private float lifetime = 3f;
+  private Entity _owner = null;
 
 	void Awake()
 	{
@@ -20,8 +21,9 @@ public class Projectile : NetworkBehaviour
 		rb = GetComponent<Rigidbody>();
 	}
 
-	public void FireBullet(float velocity)
+	public void FireBullet(float velocity, Entity owner)
 	{
+    _owner = owner;
 		if (rb != null)
 		{
 			rb.AddForce(transform.forward * velocity);
@@ -57,7 +59,7 @@ public class Projectile : NetworkBehaviour
 			Player player = other.gameObject.GetComponent<Player>();
 			if (player != null)
 			{
-				player.TakeDamage(damage, gameObject);
+				player.TakeDamage(damage, transform, transform.position, _owner);
 			}
 		}
 

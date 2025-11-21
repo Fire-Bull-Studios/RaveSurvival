@@ -3,12 +3,12 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using Mirror;
+using UnityEditor.Build;
 
 namespace RaveSurvival
 {
   public class Enemy : Entity
   {
-    public float health = 50f;
     public float shootRange;
     public float walkRange;
     private NavMeshAgent agent;
@@ -89,7 +89,6 @@ namespace RaveSurvival
           StartCoroutine(behaviorCo);
           break;
         case EnemyState.DEAD:
-          Die();
           break;
         default:
           Debug.LogError($"Invalid state passed ({enemyState}). Kinda cringe if you ask me.");
@@ -177,19 +176,17 @@ namespace RaveSurvival
       }
     }
 
-    public void TakeDamage(float dmg, Transform bulletDirection, Vector3 pos)
+    public override void TakeDamage(float dmg, Transform bulletDirection, Vector3 pos, Entity shotBy)
     {
+      base.TakeDamage(dmg, bulletDirection, pos, shotBy);
       transform.LookAt(bulletDirection);
       agent.SetDestination(pos);
-      health -= dmg;
-      if (health <= 0f)
-      {
-        Die();
-      }
     }
 
-    private void Die()
+    protected override void Die(String shotBy)
     {
+      base.Die(shotBy);
+      ChangeState(EnemyState.DEAD);
       Destroy(gameObject);
     }
 
