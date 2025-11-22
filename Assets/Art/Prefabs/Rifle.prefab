@@ -196,6 +196,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100016, guid: 1dc2a27ad3a63d24bad7f1c6d159013e, type: 3}
       insertIndex: -1
       addedObject: {fileID: -8209933458041314594}
+    - targetCorrespondingSourceObject: {fileID: 100016, guid: 1dc2a27ad3a63d24bad7f1c6d159013e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7208380129151162256}
   m_SourcePrefab: {fileID: 100100000, guid: 1dc2a27ad3a63d24bad7f1c6d159013e, type: 3}
 --- !u!4 &7602762214294482301 stripped
 Transform:
@@ -224,9 +227,10 @@ MonoBehaviour:
   syncInterval: 0
   damage: 10
   range: 100
-  fireRate: 8
   soundRange: 25
-  weaponType: 0
+  velocity: 15
+  fireRate: 5
+  bulletType: 0
   bulletStart: {fileID: 2470198516893144322}
   muzzleFlash: {fileID: 2509970891194643884}
   impactEffect: {fileID: 1806931374014481055, guid: e3630c7e107601d48b735283e5ea8b88, type: 3}
@@ -329,3 +333,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7208380129151162256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7602762214294909277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Mirror::Mirror.NetworkIdentity
+  sceneId: 0
+  _assetId: 2006576052
+  serverOnly: 1
+  visibility: 0
+  hasSpawned: 0

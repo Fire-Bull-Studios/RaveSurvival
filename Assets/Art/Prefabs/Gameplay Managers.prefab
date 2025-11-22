@@ -54,7 +54,7 @@ MonoBehaviour:
   syncInterval: 0
   players: []
   gameType: 0
-  difficulty: 0
+  difficulty: 1
   starterScene: DubstepDungeonNF
 --- !u!114 &1391821692881943137
 MonoBehaviour:

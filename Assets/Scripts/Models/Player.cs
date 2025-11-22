@@ -3,8 +3,9 @@ using UnityEngine.Animations;
 using Mirror;
 using UnityEngine.UIElements;
 using RaveSurvival;
+using System;
 
-public class Player : NetworkBehaviour
+public class Player : Entity
 {
   // Reference to the player's camera
   public Camera cam;
@@ -19,16 +20,17 @@ public class Player : NetworkBehaviour
   public PlayerLookHandler lookHandler;
 
   // Player's health value
-  public float maxHealth = 50.0f;
-  private float health = 0f;
   private float gunNoiseRange = 0f;
+
+  private bool canShoot = true;
 
   /// <summary>
   /// Unity's Start method, called before the first frame update.
   /// Sets up the camera for the local player and links it to the gun.
   /// </summary>
-  public void Start()
+  public override void Start()
   {
+    base.Start();
     health = maxHealth;
     // Find the first camera in the scene
     Camera camera = FindFirstObjectByType<Camera>();
@@ -83,7 +85,26 @@ public class Player : NetworkBehaviour
   /// </summary>
   void Update()
   {
-    // Placeholder for future update logic
+    if (canShoot)
+    {
+      if (GameManager.Instance.gameType == GameManager.GameType.OnlineMultiplayer && !isLocalPlayer)
+      {
+        return;
+      }
+
+      if (Input.GetButton("Fire1"))
+      {
+        if (GameManager.Instance.gameType == GameManager.GameType.OnlineMultiplayer)
+        {
+          gun.OnlineFire(Time.time);
+        }
+        else if (GameManager.Instance.gameType == GameManager.GameType.SinglePlayer)
+        {
+          gun.Fire(Time.time);
+          AlertNearEnemies();
+        }
+      }
+    }
   }
 
   /// <summary>
@@ -92,24 +113,22 @@ public class Player : NetworkBehaviour
   /// </summary>
   /// <param name="dmg">Amount of damage to apply</param>
   /// <param name="killedBy">GameObject that caused the player's death</param>
-  public void TakeDamage(float dmg, GameObject killedBy)
+  public override void TakeDamage(float dmg, Transform bulletDirection, Vector3 pos, Entity shotBy)
   {
+    base.TakeDamage(dmg, bulletDirection, pos, shotBy);
     // Subtract damage from health
-    health -= dmg;
     float healthPercent = health / maxHealth;
     //Debug.Log($"Health percentage: {health / maxHealth}, {health / maxHealth * 100}, {healthPercent}");
     uIManager.TakeDamage(healthPercent);
+  }
 
-    // Check if health has dropped to zero or below
-    if (health <= 0)
-    {
-      health = 0; // Ensure health doesn't go negative
-      uIManager.SwitchToDeathScene();
-      moveHandler.SetCanMove(false);
-      lookHandler.SetCanLook(false);
-      gun.SetCanShoot(false);
-      Debug.Log("You were just killed by: " + killedBy);
-    }
+  protected override void Die(String shotBy)
+  {
+    base.Die(shotBy);
+    uIManager.SwitchToDeathScene();
+    moveHandler.SetCanMove(false);
+    lookHandler.SetCanLook(false);
+    gun.SetCanShoot(false);
   }
 
   public void AlertNearEnemies()

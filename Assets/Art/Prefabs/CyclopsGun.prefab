@@ -83,10 +83,10 @@ MonoBehaviour:
   syncInterval: 0
   damage: 10
   range: 100
-  fireRate: 3
   soundRange: 100
   velocity: 25
-  weaponType: 1
+  fireRate: 3
+  bulletType: 1
   bulletStart: {fileID: 1788192146542870154}
   muzzleFlash: {fileID: 1191644083731720532, guid: fd8d5c63023f6584b968f10acf8742ac, type: 3}
   impactEffect: {fileID: 0}
