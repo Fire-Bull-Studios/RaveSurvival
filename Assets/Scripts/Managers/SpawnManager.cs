@@ -32,7 +32,6 @@ namespace RaveSurvival
 
     public void FindSpawnPoints()
     {
-      Debug.Log("FInd Spawn Points");
       GameObject sp = GameObject.FindGameObjectWithTag("SpawnPointParent");
       if (sp == null)
       {
