@@ -16,6 +16,7 @@ public class Entity : NetworkBehaviour
 
   public virtual void TakeDamage(float dmg, Transform bulletDirection, Vector3 pos, Entity shotBy)
   {
+    Debug.Log($"Health: {health}\tDamage: {dmg}");
     health -= dmg;
     if (health <= 0f)
       {

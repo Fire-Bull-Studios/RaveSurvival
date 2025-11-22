@@ -130,10 +130,10 @@ public class Gun : Weapon
         RaycastHit hit;
         if (Physics.Raycast(originPosition, direction, out hit, range))
         {
-          Enemy enemy = hit.transform.GetComponent<Enemy>();
-          if (enemy != null)
+          Entity entity = hit.transform.GetComponent<Entity>();
+          if (entity != null && entity.name != owner.name)
           {
-            enemy.TakeDamage(damage, bulletStart, originPosition, enemy);
+            entity.TakeDamage(damage, bulletStart, originPosition, entity);
           }
 
           GameObject impactFx = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));

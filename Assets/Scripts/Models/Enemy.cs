@@ -31,6 +31,7 @@ namespace RaveSurvival
 
     public override void Start()
     {
+      base.Start();
       agent = GetComponent<NavMeshAgent>();
       megaphone = GetComponent<EnemyAlert>();
       StartAction();
@@ -180,7 +181,10 @@ namespace RaveSurvival
     {
       base.TakeDamage(dmg, bulletDirection, pos, shotBy);
       transform.LookAt(bulletDirection);
-      agent.SetDestination(pos);
+      if(agent != null)
+      {
+        agent.SetDestination(pos);
+      }
     }
 
     protected override void Die(String shotBy)
