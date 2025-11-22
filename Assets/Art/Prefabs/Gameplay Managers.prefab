@@ -55,7 +55,7 @@ MonoBehaviour:
   players: []
   gameType: 0
   difficulty: 1
-  starterScene: DubstepDungeonNF
+  starterScene: DubstepDungeonV2
 --- !u!114 &1391821692881943137
 MonoBehaviour:
   m_ObjectHideFlags: 0
