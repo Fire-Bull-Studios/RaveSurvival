@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 5441606127628325216}
   - component: {fileID: 5397257050923373164}
   - component: {fileID: 4435813860263075619}
+  - component: {fileID: 585347767869237723}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -219,6 +220,19 @@ CapsuleCollider:
   m_Height: 1.8294239
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &585347767869237723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6039663293959229342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c4c8d465399f344cb00dfeee30735ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: RaveSurvival::RaveSurvival.PlayerGunHandler
+  gun: {fileID: 3367453451308740801}
 --- !u!1 &6479697084324283808
 GameObject:
   m_ObjectHideFlags: 0
