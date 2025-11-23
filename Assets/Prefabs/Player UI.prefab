@@ -1705,4 +1705,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: RaveSurvival::PlayerUIManager
   healthBar: {fileID: 6606275040046495163}
   dmgFxHandler: {fileID: 8897385081178782610}
+  ammoText: {fileID: 0}
   deathScreen: {fileID: 3987163086109397845}
