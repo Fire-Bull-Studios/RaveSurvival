@@ -1,54 +1,52 @@
 using System;
 using System.Xml.Serialization;
 using Codice.Client.BaseCommands.Import;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerUIManager : MonoBehaviour
 {
-  public enum PlayerAttribute
-  {
-    health = 0,
-    ammo,
-    aliveState
-  }
-
-  public HealthBar healthBar;
-  public DamageEffectHandler dmgFxHandler;
-  public GameObject deathScreen;
-  // Start is called once before the first execution of Update after the MonoBehaviour is created
-  void Start()
-  {
-
-  }
-
-  // Update is called once per frame
-  void Update()
-  {
-
-  }
-
-  public void ChangePlayerAttribute(PlayerAttribute attribute, int value)
-  {
-    switch (attribute)
+    public enum PlayerAttribute
     {
-      default:
-        break;
+        health = 0,
+        ammo,
+        aliveState
     }
-  }
 
-  public void TakeDamage(float value)
-  {
-    healthBar.HandleHealthChange(value);
-    dmgFxHandler.CreateDamageFx();
-  }
+    public HealthBar healthBar;
+    public DamageEffectHandler dmgFxHandler;
 
-  public void SwitchToDeathScene()
-  {
-    deathScreen.SetActive(true);
-  }
+    public TextMeshProUGUI ammoText;
+    public GameObject deathScreen;
 
-  private void changeAmmo()
-  {
+    public void ChangePlayerAttribute(PlayerAttribute attribute, int value)
+    {
+        switch (attribute)
+        {
+            default:
+                break;
+        }
+    }
 
-  }
+    public void TakeDamage(float value)
+    {
+        healthBar.HandleHealthChange(value);
+        dmgFxHandler.CreateDamageFx();
+    }
+
+    public void SwitchToDeathScene()
+    {
+        deathScreen.SetActive(true);
+    }
+
+    public void SetAmmoText(string text)
+    {
+        ammoText.text = text;
+    }
+
+    private void changeAmmo()
+    {
+
+    }
 }
