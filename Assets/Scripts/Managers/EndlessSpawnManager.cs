@@ -60,7 +60,7 @@ public class EndlessSpawnManager : MonoBehaviour
         SpawnPlayers();
     }
 
-    public void SpawnEnemies(int round)
+    public int SpawnEnemies(int round)
     {
         if (round == 1)
         {
@@ -77,6 +77,7 @@ public class EndlessSpawnManager : MonoBehaviour
             Debug.Log($"Random Spawn: {randomSpawn}\tRandom Delay: {randomDelay}\ttemp: {enemyPrefab?.name}");
             enemySpawns[randomSpawn].SpawnCharacter(temp, randomDelay);
         }
+        return enemyCount;
     }
 
     public void SpawnPlayers()

@@ -77,7 +77,7 @@ namespace RaveSurvival
             {
                 if (gameType == GameType.Endless)
                 {
-                    RoundManager rm = RoundManager.CreateComponent(gameObject, difficulty, this);
+                    roundManger = RoundManager.CreateComponent(gameObject, difficulty, this);
                 }
                 else if (gameType == GameType.SinglePlayer)
                 {
