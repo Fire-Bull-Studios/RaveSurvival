@@ -5,7 +5,7 @@ using System;
 
 public class Entity : NetworkBehaviour
 {
-  public Weapon weapon;
+  //public Weapon weapon;
   public float maxHealth = 50.0f;
   protected float health = 0f;
 
