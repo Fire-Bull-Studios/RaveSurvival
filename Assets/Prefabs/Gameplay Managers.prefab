@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec20785f3edb9f544a350c174c76a56e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: RaveSurvival::RaveSurvival.DebugManager
-  debugLevel: 3
+  debugLevel: 1
 --- !u!1 &4926253906168692302
 GameObject:
   m_ObjectHideFlags: 0

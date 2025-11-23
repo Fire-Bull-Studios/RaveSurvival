@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 198ff398f962ad5469d0749a3d1ad5ed
+timeCreated: 1549501990
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 61490
+  packageName: 'PISTOL Starter: MoCap Animation Pack'
+  packageVersion: V2.7A1
+  assetPath: Assets/Pistol 27A Starter/Animation/In-Place/Materials/MCG_diff.mat
+  uploadId: 309537

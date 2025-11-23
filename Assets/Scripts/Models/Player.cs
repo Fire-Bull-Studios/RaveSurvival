@@ -10,6 +10,9 @@ public class Player : Entity
     // Reference to the player's camera
     public Camera cam;
 
+    public Animator animator;
+    public GameObject mesh;
+
     // Reference to the player's gun
     public Gun gun;
 
@@ -23,6 +26,8 @@ public class Player : Entity
     private float gunNoiseRange = 0f;
 
     private bool canShoot = true;
+
+    Vector3 meshPos = new Vector3(0.1f, -1.675f, -0.1f);
 
     /// <summary>
     /// Unity's Start method, called before the first frame update.
@@ -52,6 +57,7 @@ public class Player : Entity
                 break;
             case GameManager.GameType.SinglePlayer:
                 AttachCamera(cam);
+                MakeMeshChildOfCamera();
                 break;
             case GameManager.GameType.LocalMultiplayer:
                 //TODO implement this later
@@ -80,6 +86,12 @@ public class Player : Entity
 
         // Link the camera to the gun
         gun.SetBulletStart(camera.gameObject.transform);
+    }
+
+    private void MakeMeshChildOfCamera()
+    {
+        mesh.transform.parent = cam.gameObject.transform;
+        mesh.transform.localPosition = meshPos;
     }
 
     /// <summary>
