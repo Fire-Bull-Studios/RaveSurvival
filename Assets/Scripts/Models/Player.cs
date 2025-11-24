@@ -59,14 +59,12 @@ public class Player : Entity
                 }
                 break;
             case GameManager.GameType.SinglePlayer:
+            case GameManager.GameType.Endless:
                 AttachCamera(cam);
                 MakeMeshChildOfCamera();
                 break;
             case GameManager.GameType.LocalMultiplayer:
                 //TODO implement this later
-                break;
-            case GameManager.GameType.Endless:
-                AttachCamera(cam);
                 break;
             default:
                 Debug.LogError("Invalid game type enum...");
