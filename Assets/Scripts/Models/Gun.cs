@@ -36,7 +36,7 @@ public class Gun : Weapon
     public uint magazineSize = 12;
     public uint magazineAmmo;
     public uint totalAmmo;
-    private const int PlayerLayer = 9;
+    //private const int PlayerLayer = 9;
 
     public override void Awake()
     {
@@ -50,7 +50,7 @@ public class Gun : Weapon
             }
         }
         //only the player should 'have ammo'
-        hasAmmo = gameObject.layer == PlayerLayer;
+        hasAmmo = gameObject.layer == Player.PlayerLayer;
         totalAmmo = hasAmmo ? startingAmmo : uint.MaxValue;
         magazineAmmo = hasAmmo ? magazineSize : uint.MaxValue;
     }
@@ -100,6 +100,19 @@ public class Gun : Weapon
         totalAmmo -= transfer;
 
         DebugManager.Instance.Print($"Ammo = {magazineAmmo} / {totalAmmo}", DebugManager.DebugLevel.Paul);
+        return true;
+    }
+
+    public bool AddAmmo()
+    {
+        DebugManager.Instance.Print("Adding ammo...", DebugManager.DebugLevel.Paul);
+        if (!hasAmmo)
+        {
+            return false;
+        }
+
+        magazineAmmo = magazineSize;
+        totalAmmo = startingAmmo;
         return true;
     }
 

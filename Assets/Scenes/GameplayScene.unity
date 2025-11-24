@@ -427,6 +427,8 @@ MonoBehaviour:
   gameType: 0
   difficulty: 0
   starterScene: 
+  enemyPrefabs: []
+  playerPrefab: {fileID: 0}
 --- !u!4 &651248273
 Transform:
   m_ObjectHideFlags: 0

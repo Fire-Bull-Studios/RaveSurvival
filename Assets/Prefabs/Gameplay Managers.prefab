@@ -53,8 +53,8 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   players: []
-  gameType: 3
-  difficulty: 1
+  gameType: 0
+  difficulty: 0
   starterScene: DubstepDungeonV2
   enemyPrefabs:
   - {fileID: 8485471596439444230, guid: 77e7c10987825ef4e8c5b38fd06be399, type: 3}
@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec20785f3edb9f544a350c174c76a56e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: RaveSurvival::RaveSurvival.DebugManager
-  debugLevel: 1
+  debugLevel: 3
 --- !u!1 &4926253906168692302
 GameObject:
   m_ObjectHideFlags: 0
