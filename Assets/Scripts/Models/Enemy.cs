@@ -169,7 +169,7 @@ namespace RaveSurvival
         private void ShootPlayer(Transform player)
         {
             transform.LookAt(player);
-            gun.transform.LookAt(player);
+            gun.transform.LookAt(player.gameObject.GetComponent<Player>().cam.transform);
             if (GameManager.Instance.gameType == GameManager.GameType.OnlineMultiplayer)
             {
                 gun.OnlineFire(Time.time);

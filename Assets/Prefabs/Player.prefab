@@ -841,6 +841,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3498491172979356739, guid: 9912101b51a73074e87e0feab407e288, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 3498491172979356739, guid: 9912101b51a73074e87e0feab407e288, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -150
+      objectReference: {fileID: 0}
+    - target: {fileID: 3498491172979356739, guid: 9912101b51a73074e87e0feab407e288, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7214031505138669789, guid: 9912101b51a73074e87e0feab407e288, type: 3}
+      propertyPath: ammoText
+      value: 
+      objectReference: {fileID: 4435000560284915383}
     - target: {fileID: 7268321188749007299, guid: 9912101b51a73074e87e0feab407e288, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -885,6 +901,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf461678adcdd144a8fcc50d20b5e57f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: RaveSurvival::PlayerUIManager
+--- !u!114 &4435000560284915383 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5675100524316770412, guid: 9912101b51a73074e87e0feab407e288, type: 3}
+  m_PrefabInstance: {fileID: 8308657909348701915}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!224 &6345207200964284836 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3116768072107689855, guid: 9912101b51a73074e87e0feab407e288, type: 3}

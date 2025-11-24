@@ -35,7 +35,7 @@ namespace RaveSurvival
 
             if ((int)debugLevel <= (int)this.debugLevel)
             {
-                //Debug.Log(message);
+                Debug.Log(message);
             }
         }
     }

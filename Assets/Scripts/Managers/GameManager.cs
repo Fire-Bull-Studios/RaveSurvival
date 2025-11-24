@@ -72,7 +72,6 @@ namespace RaveSurvival
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             DebugManager.Instance.Print($"Scene name: {scene.name}; Starter name: {starterScene}", DebugManager.DebugLevel.Verbose);
-            Debug.Log($"Scene name: {scene.name}; Starter name: {starterScene}");
             if (scene.name == starterScene)
             {
                 if (gameType == GameType.Endless)
@@ -94,7 +93,7 @@ namespace RaveSurvival
                 }
                 else
                 {
-                    DebugManager.Instance.Print($"Everything other than Single Player and Endless will not work currently (L)", DebugManager.DebugLevel.Production);
+                    DebugManager.Instance.Print($"Everything other than Single Player and Endless will not work currently (L)", DebugManager.DebugLevel.Minimal);
                 }
             }
 

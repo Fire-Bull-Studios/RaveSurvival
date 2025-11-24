@@ -28,6 +28,7 @@ public class Player : Entity
     private bool canShoot = true;
 
     Vector3 meshPos = new Vector3(0.1f, -1.675f, -0.1f);
+    string ammoStr;
 
     /// <summary>
     /// Unity's Start method, called before the first frame update.
@@ -37,6 +38,8 @@ public class Player : Entity
     {
         base.Start();
         health = maxHealth;
+        ammoStr = $"{gun.magazineAmmo} / {gun.totalAmmo}";
+        uIManager.SetAmmoText(ammoStr);
         // Find the first camera in the scene
         cam = FindFirstObjectByType<Camera>();
 
@@ -56,14 +59,12 @@ public class Player : Entity
                 }
                 break;
             case GameManager.GameType.SinglePlayer:
+            case GameManager.GameType.Endless:
                 AttachCamera(cam);
                 MakeMeshChildOfCamera();
                 break;
             case GameManager.GameType.LocalMultiplayer:
                 //TODO implement this later
-                break;
-            case GameManager.GameType.Endless:
-                AttachCamera(cam);
                 break;
             default:
                 Debug.LogError("Invalid game type enum...");
@@ -118,6 +119,15 @@ public class Player : Entity
                     gun.Fire(Time.time);
                     AlertNearEnemies();
                 }
+                ammoStr = $"{gun.magazineAmmo} / {gun.totalAmmo}";
+                uIManager.SetAmmoText(ammoStr);
+            }
+
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                gun.Reload();
+                ammoStr = $"{gun.magazineAmmo} / {gun.totalAmmo}";
+                uIManager.SetAmmoText(ammoStr);
             }
         }
     }
