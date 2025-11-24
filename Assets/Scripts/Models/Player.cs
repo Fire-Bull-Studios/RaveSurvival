@@ -12,6 +12,7 @@ public class Player : Entity
 
     public Animator animator;
     public GameObject mesh;
+
     // Reference to the player's gun
     public Gun gun;
 
@@ -61,6 +62,9 @@ public class Player : Entity
             case GameManager.GameType.LocalMultiplayer:
                 //TODO implement this later
                 break;
+            case GameManager.GameType.Endless:
+                AttachCamera(cam);
+                break;
             default:
                 Debug.LogError("Invalid game type enum...");
                 break;
@@ -75,7 +79,6 @@ public class Player : Entity
 
     private void AttachCamera(Camera camera)
     {
-        //DebugManager.Instance.Print(cam.name, DebugManager.DebugLevel.Paul);
         // Attach the camera to the player's camera position
         camera.transform.parent = cameraPos.transform;
         camera.transform.position = cameraPos.position;
@@ -110,7 +113,7 @@ public class Player : Entity
                 {
                     gun.OnlineFire(Time.time);
                 }
-                else if (GameManager.Instance.gameType == GameManager.GameType.SinglePlayer)
+                else
                 {
                     gun.Fire(Time.time);
                     AlertNearEnemies();

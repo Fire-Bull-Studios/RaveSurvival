@@ -3,8 +3,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Mirror;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
+using System.Linq;
 
-namespace RaveSurvival 
+namespace RaveSurvival
 {
     public class GameManager : NetworkBehaviour
     {
@@ -18,8 +20,8 @@ namespace RaveSurvival
         {
             SinglePlayer,
             LocalMultiplayer,
-            OnlineMultiplayer
-
+            OnlineMultiplayer,
+            Endless
         };
 
         public enum Difficulty
@@ -35,6 +37,11 @@ namespace RaveSurvival
         public Difficulty difficulty;
 
         public string starterScene;
+
+        public GameObject[] enemyPrefabs;
+        public GameObject playerPrefab;
+
+        private RoundManager roundManger = null;
 
         /// <summary>
         /// Unity's Awake method, called when the script instance is being loaded.
@@ -68,16 +75,27 @@ namespace RaveSurvival
             Debug.Log($"Scene name: {scene.name}; Starter name: {starterScene}");
             if (scene.name == starterScene)
             {
-                SpawnManager.Instance.FindSpawnPoints();
-                SpawnManager.Instance.SpawnPlayers(gameType);
-                if (difficulty != Difficulty.Peaceful)
-                { 
-                    StartCoroutine(SpawnManager.Instance.SpawnEnemies());
+                if (gameType == GameType.Endless)
+                {
+                    roundManger = RoundManager.CreateComponent(gameObject, difficulty, this);
                 }
+                else if (gameType == GameType.SinglePlayer)
+                {
+                    SpawnManager.Instance.FindSpawnPoints();
+                    SpawnManager.Instance.SpawnPlayers(gameType);
+                    if (difficulty != Difficulty.Peaceful)
+                    {
+                        StartCoroutine(SpawnManager.Instance.SpawnEnemies());
+                    }
 
-                //Music
-                MusicManager.Instance.SetSong(MusicManager.Instance.tracks.ToArray()[0]);
-                MusicManager.Instance.FindSpeakers();
+                    //Music
+                    MusicManager.Instance.SetSong(MusicManager.Instance.tracks.ToArray()[0]);
+                    MusicManager.Instance.FindSpeakers();
+                }
+                else
+                {
+                    DebugManager.Instance.Print($"Everything other than Single Player and Endless will not work currently (L)", DebugManager.DebugLevel.Production);
+                }
             }
 
             //Clean up bootstraper if it exists
@@ -95,6 +113,17 @@ namespace RaveSurvival
         {
             // Find all Player objects in the scene and add them to the players list
             players = new List<Player>(FindObjectsByType<Player>(FindObjectsSortMode.None));
+        }
+
+        public GameObject[] GetEnemyPrefabs()
+        {
+            Debug.Log($"BRUHHHHH What is the prefab name: {enemyPrefabs.First().name}");
+            return enemyPrefabs;
+        }
+
+        public GameObject GetPlayerPrefab()
+        {
+            return playerPrefab;
         }
 
         /// <summary>

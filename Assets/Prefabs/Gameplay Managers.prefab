@@ -53,9 +53,12 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   players: []
-  gameType: 0
-  difficulty: 0
-  starterScene: DubstepDungeonNF
+  gameType: 3
+  difficulty: 1
+  starterScene: DubstepDungeonV2
+  enemyPrefabs:
+  - {fileID: 8485471596439444230, guid: 77e7c10987825ef4e8c5b38fd06be399, type: 3}
+  playerPrefab: {fileID: 6039663293959229342, guid: 452912bd801777348a3f4ab6f95a8ffb, type: 3}
 --- !u!114 &1391821692881943137
 MonoBehaviour:
   m_ObjectHideFlags: 0
