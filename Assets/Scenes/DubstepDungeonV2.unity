@@ -16020,6 +16020,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Damage Kandi
       objectReference: {fileID: 0}
+    - target: {fileID: 2788130029820143407, guid: 7e75c6b566923c14d973ca751a7be5c3, type: 3}
+      propertyPath: m_TagString
+      value: Interactable
+      objectReference: {fileID: 0}
     - target: {fileID: 3313169185352662421, guid: 7e75c6b566923c14d973ca751a7be5c3, type: 3}
       propertyPath: m_LocalPosition.x
       value: -27.329346

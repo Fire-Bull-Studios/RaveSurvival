@@ -173,11 +173,11 @@ public class Player : Entity
 
     void OnCollisionEnter(Collision collision)
     {
-        DebugManager.Instance.Print($"COLLISION NAME: {collision.gameObject.name}", DebugManager.DebugLevel.Verbose);
-        Debug.Log("INTERACTTTTTTT!!!!");
-        Interactable interact = collision.gameObject.GetComponent<Interactable>();
-        if (interact != null)
+        if (collision.gameObject.tag == "Interactable")
         {
+            Debug.Log("INTERACTING WITH THING");
+            DebugManager.Instance.Print($"COLLISION NAME: {collision.gameObject.name}", DebugManager.DebugLevel.Verbose);
+            Interactable interact = collision.gameObject.GetComponent<Interactable>();
             if (interact.IsInstantInteract())
             {
                 interact.Interact(this);
