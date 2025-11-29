@@ -51,10 +51,15 @@ public class PlayerUIManager : MonoBehaviour
         ammoText.text = text;
     }
 
-    public void setInteractText(string text)
+    public void SetInteractText(string text)
     {
         interactText.enabled = true;
         interactText.text = text;
+    }
+
+    public void DisableInteractText()
+    {
+        interactText.enabled = false;
     }
 
     private void changeAmmo()

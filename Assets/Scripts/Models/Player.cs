@@ -1,9 +1,8 @@
 using UnityEngine;
-using UnityEngine.Animations;
-using Mirror;
-using UnityEngine.UIElements;
 using RaveSurvival;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 public class Player : Entity
 {
@@ -23,16 +22,20 @@ public class Player : Entity
     public PlayerUIManager uIManager;
     public PlayerMoveHandler moveHandler;
     public PlayerLookHandler lookHandler;
+    public List<Interactable> curCollided;
 
     // Player's health value
     private float gunNoiseRange = 0f;
 
     private bool canShoot = true;
+    private bool canInteract = true;
 
     public String interactBtn = "E";
 
     Vector3 meshPos = new Vector3(0.1f, -1.675f, -0.1f);
     string ammoStr;
+
+    
 
     /// <summary>
     /// Unity's Start method, called before the first frame update.
@@ -82,23 +85,6 @@ public class Player : Entity
         }
     }
 
-    private void AttachCamera(Camera camera)
-    {
-        // Attach the camera to the player's camera position
-        camera.transform.parent = cameraPos.transform;
-        camera.transform.position = cameraPos.position;
-        camera.transform.rotation = cameraPos.rotation;
-
-        // Link the camera to the gun
-        gun.SetBulletStart(camera.gameObject.transform);
-    }
-
-    private void MakeMeshChildOfCamera()
-    {
-        mesh.transform.parent = cam.gameObject.transform;
-        mesh.transform.localPosition = meshPos;
-    }
-
     /// <summary>
     /// Unity's Update method, called once per frame.
     /// Currently empty but can be used for player-specific updates.
@@ -134,6 +120,32 @@ public class Player : Entity
                 uIManager.SetAmmoText(ammoStr);
             }
         }
+        if (canInteract)
+        {
+            if (Input.GetKeyDown(KeyCode.E) && curCollided.Count > 0)
+            {
+                Interactable interact = curCollided.Last();
+                RemoveInteractItem(interact);
+                interact.Interact(this);
+            }
+        }
+    }
+
+    private void AttachCamera(Camera camera)
+    {
+        // Attach the camera to the player's camera position
+        camera.transform.parent = cameraPos.transform;
+        camera.transform.position = cameraPos.position;
+        camera.transform.rotation = cameraPos.rotation;
+
+        // Link the camera to the gun
+        gun.SetBulletStart(camera.gameObject.transform);
+    }
+
+    private void MakeMeshChildOfCamera()
+    {
+        mesh.transform.parent = cam.gameObject.transform;
+        mesh.transform.localPosition = meshPos;
     }
 
     /// <summary>
@@ -173,23 +185,54 @@ public class Player : Entity
         }
     }
 
-    void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collider)
     {
-        if (collision.gameObject.tag == "Interactable")
+        //Debug.Log($"Collided with {collider.gameObject.name}");
+        if (collider.gameObject.tag == "Interactable")
         {
             Debug.Log("INTERACTING WITH THING");
-            DebugManager.Instance.Print($"COLLISION NAME: {collision.gameObject.name}", DebugManager.DebugLevel.Verbose);
-            Interactable interact = collision.gameObject.GetComponent<Interactable>();
-            if (interact.IsInstantInteract())
+            DebugManager.Instance.Print($"COLLISION NAME: {collider.gameObject.name}", DebugManager.DebugLevel.Verbose);
+            Interactable interact = collider.gameObject.GetComponent<Interactable>();
+            if (!curCollided.Contains(interact))
             {
-                interact.Interact(this);
-            }
-            else
-            {
-                uIManager.setInteractText($"Press {interactBtn} to {interact.GetAction()} {interact.GetName()}");
+                if (interact.IsInstantInteract())
+                {
+                    interact.Interact(this);
+                }
+                else
+                {
+                    curCollided.Add(interact);
+                    uIManager.SetInteractText($"Press {interactBtn} to {interact.GetAction()} {interact.GetName()}");
+                }
             }
         }
     }
+
+    private void OnTriggerExit(Collider collider)
+    {
+        if (collider.gameObject.tag == "Interactable")
+        {
+            Interactable interact = collider.gameObject.GetComponent<Interactable>();
+            RemoveInteractItem(interact);
+        }
+    }
+
+    private void RemoveInteractItem(Interactable interact)
+    {
+        curCollided.Remove(interact);
+        if (curCollided.Count() > 0)
+        {
+            Interactable col = curCollided.Last();
+            Debug.Log($"CHeck here! {col.name}");
+            uIManager.SetInteractText($"Press {interactBtn} to {col.GetAction()} {col.GetName()}");
+        }
+        else
+        {
+            uIManager.DisableInteractText();
+        }
+    }
+
+    
 
     void OnDrawGizmos()
     {

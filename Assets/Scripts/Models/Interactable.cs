@@ -7,6 +7,7 @@ public abstract class Interactable : MonoBehaviour
 {
     public float range = 5.0f;
     private SphereCollider col = null;
+    private Rigidbody rb = null;
     private bool isInteractable = true;
     private bool isInstantInteract = false;
     public string interactName = "item";
