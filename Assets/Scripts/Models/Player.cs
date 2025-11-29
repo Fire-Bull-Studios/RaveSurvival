@@ -7,6 +7,8 @@ using System;
 
 public class Player : Entity
 {
+
+    public static readonly int PlayerLayer = 9;
     // Reference to the player's camera
     public Camera cam;
 
