@@ -18,7 +18,13 @@ public class PlayerUIManager : MonoBehaviour
     public DamageEffectHandler dmgFxHandler;
 
     public TextMeshProUGUI ammoText;
+    public TextMeshProUGUI interactText;
     public GameObject deathScreen;
+
+    void Start()
+    {
+        interactText.enabled = false;
+    } 
 
     public void ChangePlayerAttribute(PlayerAttribute attribute, int value)
     {
@@ -43,6 +49,12 @@ public class PlayerUIManager : MonoBehaviour
     public void SetAmmoText(string text)
     {
         ammoText.text = text;
+    }
+
+    public void setInteractText(string text)
+    {
+        interactText.enabled = true;
+        interactText.text = text;
     }
 
     private void changeAmmo()

@@ -37,7 +37,7 @@ public class RoundManager : MonoBehaviour
 
     public void SubscribeToEnemy(Enemy enemy)
     {
-        Debug.Log($"Subscribe to enemy");
+        //Debug.Log($"Subscribe to enemy");
         enemy.DeathEvent += HandleDeathEvent;
     }
 

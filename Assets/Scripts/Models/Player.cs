@@ -27,6 +27,8 @@ public class Player : Entity
 
     private bool canShoot = true;
 
+    public String interactBtn = "E";
+
     Vector3 meshPos = new Vector3(0.1f, -1.675f, -0.1f);
     string ammoStr;
 
@@ -165,6 +167,24 @@ public class Player : Entity
             if (enemy != null)
             {
                 enemy.PlayerSpotted(transform);
+            }
+        }
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        DebugManager.Instance.Print($"COLLISION NAME: {collision.gameObject.name}", DebugManager.DebugLevel.Verbose);
+        Debug.Log("INTERACTTTTTTT!!!!");
+        Interactable interact = collision.gameObject.GetComponent<Interactable>();
+        if (interact != null)
+        {
+            if (interact.IsInstantInteract())
+            {
+                interact.Interact(this);
+            }
+            else
+            {
+                uIManager.setInteractText($"Press {interactBtn} to {interact.GetAction()} {interact.GetName()}");
             }
         }
     }
