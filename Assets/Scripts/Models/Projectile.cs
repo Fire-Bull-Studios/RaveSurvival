@@ -59,7 +59,7 @@ public class Projectile : NetworkBehaviour
             Player player = other.gameObject.GetComponent<Player>();
             if (player != null)
             {
-                player.TakeDamage(damage * _owner.GetDamageMult(), transform, transform.position, _owner);
+                player.TakeDamage(damage, transform, transform.position, _owner);
             }
         }
 

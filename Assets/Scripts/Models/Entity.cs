@@ -2,14 +2,12 @@ using UnityEngine;
 using RaveSurvival;
 using Mirror;
 using System;
+using System.Collections;
 
 public class Entity : NetworkBehaviour
 {
     public float maxHealth = 50.0f;
     protected float health = 0f;
-
-    // Player's scalars
-    private float damageMult = 1.0f;
 
     public virtual void Start()
     {
@@ -32,13 +30,8 @@ public class Entity : NetworkBehaviour
         Debug.Log($"{name} was just killed by {shotBy}");
     }
 
-    public float GetDamageMult()
+    public virtual void AddKandi(Kandi kandi)
     {
-        return damageMult;
-    }
-
-    public void AddDamageMult(float x)
-    {
-        damageMult += x;
+        return;
     }
 }

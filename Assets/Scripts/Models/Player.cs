@@ -3,10 +3,17 @@ using RaveSurvival;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 
 public class Player : Entity
 {
-
+    public enum Scalar
+    {
+        DamageMult = 0,
+        DamageAdd,
+        SpeedAdd,
+        HealthAdd,
+    }
     public static readonly int PlayerLayer = 9;
     // Reference to the player's camera
     public Camera cam;
@@ -17,9 +24,13 @@ public class Player : Entity
     // Reference to the player's gun
     public Gun gun;
 
+    // Player's scalars
+    private float damageMult = 1.0f;
+
     // Transform representing the position of the camera
     public Transform cameraPos;
     public PlayerUIManager uIManager;
+    public KandiManager kandiManager;
     public PlayerMoveHandler moveHandler;
     public PlayerLookHandler lookHandler;
     public List<Interactable> curCollided;
@@ -35,7 +46,7 @@ public class Player : Entity
     Vector3 meshPos = new Vector3(0.1f, -1.675f, -0.1f);
     string ammoStr;
 
-    
+
 
     /// <summary>
     /// Unity's Start method, called before the first frame update.
@@ -106,7 +117,7 @@ public class Player : Entity
                 }
                 else
                 {
-                    gun.Fire(Time.time);
+                    gun.Fire(Time.time, damageMult);
                     AlertNearEnemies();
                 }
                 ammoStr = $"{gun.magazineAmmo} / {gun.totalAmmo}";
@@ -146,6 +157,27 @@ public class Player : Entity
     {
         mesh.transform.parent = cam.gameObject.transform;
         mesh.transform.localPosition = meshPos;
+    }
+
+    public float GetDamageMult()
+    {
+        return damageMult;
+    }
+
+    public override void AddKandi(Kandi kandi)
+    {
+        Kandi.Effect effect = kandi.GetEffect();
+        switch (effect.scalar)
+        {
+            case Player.Scalar.DamageMult:
+                damageMult += effect.value;
+                break;
+            default:
+                DebugManager.Instance.Print($"Invalid Scalar Type", DebugManager.DebugLevel.Production);
+                break;
+        }
+        Debug.Log($"MODEL: {kandi}");
+        kandiManager.AddKandi(kandi.kandiModel);
     }
 
     /// <summary>
@@ -188,15 +220,16 @@ public class Player : Entity
     private void OnTriggerEnter(Collider collider)
     {
         //Debug.Log($"Collided with {collider.gameObject.name}");
-        if (collider.gameObject.tag == "Interactable")
+        Interactable interact = collider.gameObject.GetComponent<Interactable>();
+        if (interact != null)
         {
             Debug.Log("INTERACTING WITH THING");
             DebugManager.Instance.Print($"COLLISION NAME: {collider.gameObject.name}", DebugManager.DebugLevel.Verbose);
-            Interactable interact = collider.gameObject.GetComponent<Interactable>();
             if (!curCollided.Contains(interact))
             {
                 if (interact.IsInstantInteract())
                 {
+                    Debug.Log($"instant interact: {interact.name}");
                     interact.Interact(this);
                 }
                 else
@@ -210,9 +243,10 @@ public class Player : Entity
 
     private void OnTriggerExit(Collider collider)
     {
-        if (collider.gameObject.tag == "Interactable")
+        Interactable interact = collider.gameObject.GetComponent<Interactable>();
+        if (interact != null)
         {
-            Interactable interact = collider.gameObject.GetComponent<Interactable>();
+            Debug.Log($"Remove interacting item: {interact.name}");
             RemoveInteractItem(interact);
         }
     }
@@ -231,8 +265,6 @@ public class Player : Entity
             uIManager.DisableInteractText();
         }
     }
-
-    
 
     void OnDrawGizmos()
     {

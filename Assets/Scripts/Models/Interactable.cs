@@ -6,14 +6,14 @@ using UnityEngine;
 public abstract class Interactable : MonoBehaviour
 {
     public float range = 5.0f;
+    public bool isInstantInteract = false;
     private SphereCollider col = null;
     private Rigidbody rb = null;
     private bool isInteractable = true;
-    private bool isInstantInteract = false;
     public string interactName = "item";
     public string action = "interact with";
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    protected virtual void Start()
     {
         col = gameObject.AddComponent<SphereCollider>();
         col.radius = range;

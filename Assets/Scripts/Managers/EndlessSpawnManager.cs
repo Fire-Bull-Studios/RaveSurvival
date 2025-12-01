@@ -68,6 +68,10 @@ public class EndlessSpawnManager : MonoBehaviour
             playerPrefab = gameManager.GetPlayerPrefab();
             GetSpawnPoints();
         }
+        if (difficulty == Difficulty.Peaceful)
+        {
+            return 0;
+        }
         int enemyCount = 5 + (round * 4);
         for (int i = 0; i < enemyCount; i++)
         {

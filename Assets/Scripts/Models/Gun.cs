@@ -159,9 +159,9 @@ public class Gun : Weapon
         }
     }
 
-    public void Fire(float currentTime)
+    public void Fire(float currentTime, float damageMult = 1.0f)
     {
-        float finalDamage = damage * owner.GetDamageMult();
+        float finalDamage = damage * damageMult;
         if (GameManager.Instance == null)
         {
             Debug.LogError("Error... Game manager instance is null when trying to shoot!");
