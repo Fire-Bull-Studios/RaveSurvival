@@ -11,7 +11,8 @@ Material:
   m_Shader: {fileID: 4800000, guid: c8d12adcee749c344b8117cf7c7eb912, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - OUTLINE_ON
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -48,10 +49,10 @@ Material:
     - _MaskSoftnessY: 0
     - _MaskWipeControl: 0.5
     - _OutlineSoftness: 0
-    - _OutlineWidth: 0
+    - _OutlineWidth: 1
     - _Padding: 0
     - _PerspectiveFilter: 0.875
-    - _ScaleRatioA: 0.8
+    - _ScaleRatioA: 0.7111111
     - _ScaleRatioB: 1
     - _ScaleRatioC: 0.7
     - _ScaleX: 1
@@ -4598,7 +4599,7 @@ Texture2D:
     serializedVersion: 2
     Hash: 00000000000000000000000000000000
   m_IsAlphaChannelOptional: 0
-  serializedVersion: 3
+  serializedVersion: 4
   m_Width: 512
   m_Height: 1024
   m_CompleteImageSize: 524288
