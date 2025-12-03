@@ -195,6 +195,12 @@ namespace RaveSurvival
             base.Die(shotBy);
             DeathEvent?.Invoke(this, EventArgs.Empty);
             ChangeState(EnemyState.DEAD);
+            GameObject[] beads = BeadDistribution.instance.DistributeBeads();
+            foreach (GameObject bead in beads)
+            {
+                Instantiate(bead);
+                bead.transform.position = transform.position;
+            }
             Destroy(gameObject);
         }
 

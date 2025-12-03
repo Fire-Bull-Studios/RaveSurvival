@@ -62,7 +62,7 @@ namespace RaveSurvival
           }
         }
       }
-      Debug.Log($"{playerSpawnPoints.Count} player spawn(s), {enemySpawnPoints.Count} enemy spawn(s), {bossSpawnPoints.Count} boss spawn(s)");
+      DebugManager.Instance.Print($"{playerSpawnPoints.Count} player spawn(s), {enemySpawnPoints.Count} enemy spawn(s), {bossSpawnPoints.Count} boss spawn(s)", DebugManager.DebugLevel.Minimal);
     }
 
     public void SpawnPlayers(GameManager.GameType gameType)

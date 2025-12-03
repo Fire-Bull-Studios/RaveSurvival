@@ -1,13 +1,19 @@
 using UnityEngine;
-using UnityEngine.Animations;
-using Mirror;
-using UnityEngine.UIElements;
 using RaveSurvival;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEditor;
 
 public class Player : Entity
 {
-
+    public enum Scalar
+    {
+        DamageMult = 0,
+        DamageAdd,
+        SpeedAdd,
+        HealthAdd,
+    }
     public static readonly int PlayerLayer = 9;
     // Reference to the player's camera
     public Camera cam;
@@ -18,19 +24,29 @@ public class Player : Entity
     // Reference to the player's gun
     public Gun gun;
 
+    // Player's scalars
+    private float damageMult = 1.0f;
+
     // Transform representing the position of the camera
     public Transform cameraPos;
     public PlayerUIManager uIManager;
+    public KandiManager kandiManager;
     public PlayerMoveHandler moveHandler;
     public PlayerLookHandler lookHandler;
+    public List<Interactable> curCollided;
 
     // Player's health value
     private float gunNoiseRange = 0f;
 
     private bool canShoot = true;
+    private bool canInteract = true;
+
+    public String interactBtn = "E";
 
     Vector3 meshPos = new Vector3(0.1f, -1.675f, -0.1f);
     string ammoStr;
+
+
 
     /// <summary>
     /// Unity's Start method, called before the first frame update.
@@ -76,25 +92,7 @@ public class Player : Entity
         if (gun != null)
         {
             gunNoiseRange = gun.soundRange;
-            Debug.Log($"{gunNoiseRange}: {gun.soundRange}");
         }
-    }
-
-    private void AttachCamera(Camera camera)
-    {
-        // Attach the camera to the player's camera position
-        camera.transform.parent = cameraPos.transform;
-        camera.transform.position = cameraPos.position;
-        camera.transform.rotation = cameraPos.rotation;
-
-        // Link the camera to the gun
-        gun.SetBulletStart(camera.gameObject.transform);
-    }
-
-    private void MakeMeshChildOfCamera()
-    {
-        mesh.transform.parent = cam.gameObject.transform;
-        mesh.transform.localPosition = meshPos;
     }
 
     /// <summary>
@@ -118,7 +116,7 @@ public class Player : Entity
                 }
                 else
                 {
-                    gun.Fire(Time.time);
+                    gun.Fire(Time.time, damageMult);
                     AlertNearEnemies();
                 }
                 ammoStr = $"{gun.magazineAmmo} / {gun.totalAmmo}";
@@ -132,6 +130,52 @@ public class Player : Entity
                 uIManager.SetAmmoText(ammoStr);
             }
         }
+        if (canInteract)
+        {
+            if (Input.GetKeyDown(KeyCode.E) && curCollided.Count > 0)
+            {
+                Interactable interact = curCollided.Last();
+                RemoveInteractItem(interact);
+                interact.Interact(this);
+            }
+        }
+    }
+
+    private void AttachCamera(Camera camera)
+    {
+        // Attach the camera to the player's camera position
+        camera.transform.parent = cameraPos.transform;
+        camera.transform.position = cameraPos.position;
+        camera.transform.rotation = cameraPos.rotation;
+
+        // Link the camera to the gun
+        gun.SetBulletStart(camera.gameObject.transform);
+    }
+
+    private void MakeMeshChildOfCamera()
+    {
+        mesh.transform.parent = cam.gameObject.transform;
+        mesh.transform.localPosition = meshPos;
+    }
+
+    public float GetDamageMult()
+    {
+        return damageMult;
+    }
+
+    public override void AddKandi(Kandi kandi)
+    {
+        Kandi.Effect effect = kandi.GetEffect();
+        switch (effect.scalar)
+        {
+            case Player.Scalar.DamageMult:
+                damageMult += effect.value;
+                break;
+            default:
+                DebugManager.Instance.Print($"Invalid Scalar Type", DebugManager.DebugLevel.Production);
+                break;
+        }
+        kandiManager.AddKandi(kandi.kandiModel);
     }
 
     /// <summary>
@@ -145,7 +189,6 @@ public class Player : Entity
         base.TakeDamage(dmg, bulletDirection, pos, shotBy);
         // Subtract damage from health
         float healthPercent = health / maxHealth;
-        //Debug.Log($"Health percentage: {health / maxHealth}, {health / maxHealth * 100}, {healthPercent}");
         uIManager.TakeDamage(healthPercent);
     }
 
@@ -168,6 +211,50 @@ public class Player : Entity
             {
                 enemy.PlayerSpotted(transform);
             }
+        }
+    }
+
+    private void OnTriggerEnter(Collider collider)
+    {
+        Interactable interact = collider.gameObject.GetComponent<Interactable>();
+        if (interact != null)
+        {
+            DebugManager.Instance.Print($"COLLISION NAME: {collider.gameObject.name}", DebugManager.DebugLevel.Paul);
+            if (!curCollided.Contains(interact))
+            {
+                if (interact.IsInstantInteract())
+                {
+                    interact.Interact(this);
+                }
+                else
+                {
+                    curCollided.Add(interact);
+                    uIManager.SetInteractText($"Press {interactBtn} to {interact.GetAction()} {interact.GetName()}");
+                }
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider collider)
+    {
+        Interactable interact = collider.gameObject.GetComponent<Interactable>();
+        if (interact != null)
+        {
+            RemoveInteractItem(interact);
+        }
+    }
+
+    private void RemoveInteractItem(Interactable interact)
+    {
+        curCollided.Remove(interact);
+        if (curCollided.Count() > 0)
+        {
+            Interactable col = curCollided.Last();
+            uIManager.SetInteractText($"Press {interactBtn} to {col.GetAction()} {col.GetName()}");
+        }
+        else
+        {
+            uIManager.DisableInteractText();
         }
     }
 

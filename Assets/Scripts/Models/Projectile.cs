@@ -4,73 +4,73 @@ using RaveSurvival;
 
 public class Projectile : NetworkBehaviour
 {
-	private float damage = 5.0f;
-	private Rigidbody rb;
-	[SerializeField]
-	private float lifetime = 3f;
-  private Entity _owner = null;
+    private float damage = 5.0f;
+    private Rigidbody rb;
+    [SerializeField]
+    private float lifetime = 3f;
+    private Entity _owner = null;
 
-	void Awake()
-	{
-		if (GameManager.Instance == null)
-		{
-			Debug.LogError("Error... trying to instantiate project when game manager is null!");
-			return;
-		}
+    void Awake()
+    {
+        if (GameManager.Instance == null)
+        {
+            Debug.LogError("Error... trying to instantiate project when game manager is null!");
+            return;
+        }
 
-		rb = GetComponent<Rigidbody>();
-	}
+        rb = GetComponent<Rigidbody>();
+    }
 
-	public void FireBullet(float velocity, Entity owner)
-	{
-    _owner = owner;
-		if (rb != null)
-		{
-			rb.AddForce(transform.forward * velocity);
-		}
+    public void FireBullet(float velocity, Entity owner)
+    {
+        _owner = owner;
+        if (rb != null)
+        {
+            rb.AddForce(transform.forward * velocity);
+        }
 
-		if (GameManager.Instance.gameType == GameManager.GameType.OnlineMultiplayer)
-		{
-			//Handle destrcution server side
-			if (isServer)
-			{
-				Invoke(nameof(DestroySelf), lifetime);
-			}
-		}
-		else if (GameManager.Instance.gameType == GameManager.GameType.SinglePlayer)
-		{
-			Destroy(this.gameObject, lifetime);
-		}
-		
-	}
+        if (GameManager.Instance.gameType == GameManager.GameType.OnlineMultiplayer)
+        {
+            //Handle destrcution server side
+            if (isServer)
+            {
+                Invoke(nameof(DestroySelf), lifetime);
+            }
+        }
+        else if (GameManager.Instance.gameType == GameManager.GameType.SinglePlayer)
+        {
+            Destroy(this.gameObject, lifetime);
+        }
 
-	void DestroySelf()
-	{
-		NetworkServer.Destroy(this.gameObject);
-	}
+    }
 
-	void OnTriggerEnter(Collider other)
-	{
-		if (!isServer && GameManager.Instance.gameType == GameManager.GameType.OnlineMultiplayer)
-			return;
+    void DestroySelf()
+    {
+        NetworkServer.Destroy(this.gameObject);
+    }
 
-		if (other.gameObject.tag == "Player")
-		{
-			Player player = other.gameObject.GetComponent<Player>();
-			if (player != null)
-			{
-				player.TakeDamage(damage, transform, transform.position, _owner);
-			}
-		}
+    void OnTriggerEnter(Collider other)
+    {
+        if (!isServer && GameManager.Instance.gameType == GameManager.GameType.OnlineMultiplayer)
+            return;
 
-		if (GameManager.Instance.gameType == GameManager.GameType.OnlineMultiplayer)
-			NetworkServer.Destroy(this.gameObject);
-		else
-			Destroy(this.gameObject);
-	}
+        if (other.gameObject.tag == "Player")
+        {
+            Player player = other.gameObject.GetComponent<Player>();
+            if (player != null)
+            {
+                player.TakeDamage(damage, transform, transform.position, _owner);
+            }
+        }
 
-	public void SetDamage(float dmg)
-	{
-		damage = dmg;
-	}
+        if (GameManager.Instance.gameType == GameManager.GameType.OnlineMultiplayer)
+            NetworkServer.Destroy(this.gameObject);
+        else
+            Destroy(this.gameObject);
+    }
+
+    public void SetDamage(float dmg)
+    {
+        damage = dmg;
+    }
 }

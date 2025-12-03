@@ -159,8 +159,9 @@ public class Gun : Weapon
         }
     }
 
-    public void Fire(float currentTime)
+    public void Fire(float currentTime, float damageMult = 1.0f)
     {
+        float finalDamage = damage * damageMult;
         if (GameManager.Instance == null)
         {
             Debug.LogError("Error... Game manager instance is null when trying to shoot!");
@@ -199,7 +200,7 @@ public class Gun : Weapon
                     Entity entity = hit.transform.GetComponent<Entity>();
                     if (entity != null && entity.name != owner.name)
                     {
-                        entity.TakeDamage(damage, bulletStart, originPosition, entity);
+                        entity.TakeDamage(finalDamage, bulletStart, originPosition, entity);
                     }
 
                     GameObject impactFx = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
