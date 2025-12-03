@@ -37,7 +37,6 @@ public class EndlessSpawnManager : MonoBehaviour
     public void GetSpawnPoints()
     {
         GameObject parentSpawn = GameObject.FindGameObjectWithTag("SpawnPointParent");
-        Debug.Log($"Spawn Point Parent: {parentSpawn}");
         foreach (Spawn spawn in parentSpawn.transform.GetComponentsInChildren<Spawn>())
         {
             if (spawn.GetSpawnUser() == SpawnUser.player)
@@ -78,7 +77,6 @@ public class EndlessSpawnManager : MonoBehaviour
             int randomSpawn = UnityEngine.Random.Range(0, enemySpawns.Count - 1);
             float randomDelay = UnityEngine.Random.Range(0, 5.0f);
             GameObject[] temp = { enemyPrefab };
-            Debug.Log($"Random Spawn: {randomSpawn}\tRandom Delay: {randomDelay}\ttemp: {enemyPrefab?.name}");
             enemySpawns[randomSpawn].SpawnCharacter(temp, randomDelay);
         }
         return enemyCount;
@@ -88,7 +86,6 @@ public class EndlessSpawnManager : MonoBehaviour
     {
         int rand = UnityEngine.Random.Range(0, playerSpawns.Count - 1);
         GameObject[] temp = { playerPrefab };
-        Debug.Log($"Random Spawn: {rand}");
         playerSpawns[rand].SpawnCharacter(temp);
     }
 }

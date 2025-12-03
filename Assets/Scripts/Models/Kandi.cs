@@ -28,8 +28,7 @@ public class Kandi : Interactable
 
     public override void Interact(Player player)
     {
-        DebugManager.Instance.Print($"Interacted with {name}", DebugManager.DebugLevel.Minimal);
-        Debug.Log($"KANDI MODEL: {kandiModel}");
+        DebugManager.Instance.Print($"Interacted with {name}", DebugManager.DebugLevel.Verbose);
         player.AddKandi(this);
         Destroy(this.gameObject);
         return;

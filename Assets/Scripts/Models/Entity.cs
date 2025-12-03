@@ -16,7 +16,7 @@ public class Entity : NetworkBehaviour
 
     public virtual void TakeDamage(float dmg, Transform bulletDirection, Vector3 pos, Entity shotBy)
     {
-        Debug.Log($"Health: {health}\tDamage: {dmg}");
+        DebugManager.Instance.Print($"Health: {health}\tDamage: {dmg}", DebugManager.DebugLevel.Paul);
         health -= dmg;
         if (health <= 0f)
         {
@@ -27,7 +27,7 @@ public class Entity : NetworkBehaviour
 
     protected virtual void Die(String shotBy)
     {
-        Debug.Log($"{name} was just killed by {shotBy}");
+        DebugManager.Instance.Print($"{name} was just killed by {shotBy}", DebugManager.DebugLevel.Verbose);
     }
 
     public virtual void AddKandi(Kandi kandi)

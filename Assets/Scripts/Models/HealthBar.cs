@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using RaveSurvival;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,7 +35,7 @@ public class HealthBar : MonoBehaviour
     }
     else
     {
-      Debug.Log($"Bro so cringe this shouldn't be possible and is invalid!");
+      DebugManager.Instance.Print($"Bro so cringe this shouldn't be possible and is invalid!", DebugManager.DebugLevel.Minimal);
     }
 
     if (color != currentColor)

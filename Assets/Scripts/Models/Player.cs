@@ -92,7 +92,6 @@ public class Player : Entity
         if (gun != null)
         {
             gunNoiseRange = gun.soundRange;
-            Debug.Log($"{gunNoiseRange}: {gun.soundRange}");
         }
     }
 
@@ -176,7 +175,6 @@ public class Player : Entity
                 DebugManager.Instance.Print($"Invalid Scalar Type", DebugManager.DebugLevel.Production);
                 break;
         }
-        Debug.Log($"MODEL: {kandi}");
         kandiManager.AddKandi(kandi.kandiModel);
     }
 
@@ -191,7 +189,6 @@ public class Player : Entity
         base.TakeDamage(dmg, bulletDirection, pos, shotBy);
         // Subtract damage from health
         float healthPercent = health / maxHealth;
-        //Debug.Log($"Health percentage: {health / maxHealth}, {health / maxHealth * 100}, {healthPercent}");
         uIManager.TakeDamage(healthPercent);
     }
 
@@ -219,17 +216,14 @@ public class Player : Entity
 
     private void OnTriggerEnter(Collider collider)
     {
-        //Debug.Log($"Collided with {collider.gameObject.name}");
         Interactable interact = collider.gameObject.GetComponent<Interactable>();
         if (interact != null)
         {
-            Debug.Log("INTERACTING WITH THING");
-            DebugManager.Instance.Print($"COLLISION NAME: {collider.gameObject.name}", DebugManager.DebugLevel.Verbose);
+            DebugManager.Instance.Print($"COLLISION NAME: {collider.gameObject.name}", DebugManager.DebugLevel.Paul);
             if (!curCollided.Contains(interact))
             {
                 if (interact.IsInstantInteract())
                 {
-                    Debug.Log($"instant interact: {interact.name}");
                     interact.Interact(this);
                 }
                 else
@@ -246,7 +240,6 @@ public class Player : Entity
         Interactable interact = collider.gameObject.GetComponent<Interactable>();
         if (interact != null)
         {
-            Debug.Log($"Remove interacting item: {interact.name}");
             RemoveInteractItem(interact);
         }
     }
@@ -257,7 +250,6 @@ public class Player : Entity
         if (curCollided.Count() > 0)
         {
             Interactable col = curCollided.Last();
-            Debug.Log($"CHeck here! {col.name}");
             uIManager.SetInteractText($"Press {interactBtn} to {col.GetAction()} {col.GetName()}");
         }
         else
