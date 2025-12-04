@@ -48,6 +48,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef260a06703556c459054677a15f20b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: RaveSurvival::KandiManager
+  kandiSlots:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &4550997708472315524
 GameObject:
   m_ObjectHideFlags: 0

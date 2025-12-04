@@ -69932,7 +69932,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2013717624}
   - component: {fileID: 2013717623}
-  - component: {fileID: 2013717622}
   - component: {fileID: 2013717625}
   m_Layer: 0
   m_Name: Main Camera
@@ -69941,14 +69940,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &2013717622
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2013717621}
-  m_Enabled: 1
 --- !u!20 &2013717623
 Camera:
   m_ObjectHideFlags: 0
@@ -74912,6 +74903,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1466072603937086292, guid: 405c022756bee49489024bf7fbc1ba34, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1696409643711327950, guid: 405c022756bee49489024bf7fbc1ba34, type: 3}
       propertyPath: m_Name
       value: Beadery

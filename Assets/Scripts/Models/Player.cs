@@ -147,6 +147,7 @@ public class Player : Entity
         camera.transform.parent = cameraPos.transform;
         camera.transform.position = cameraPos.position;
         camera.transform.rotation = cameraPos.rotation;
+        camera.GetComponent<AudioListener>().enabled = true;
 
         // Link the camera to the gun
         gun.SetBulletStart(camera.gameObject.transform);

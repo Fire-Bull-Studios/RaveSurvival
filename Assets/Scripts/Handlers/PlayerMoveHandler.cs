@@ -1,40 +1,100 @@
 using System;
 using UnityEngine;
 using Mirror;
-using NUnit.Framework;
+using UnityEngine.InputSystem;
 
 namespace RaveSurvival
 {
     public class PlayerMoveHandler : NetworkBehaviour
     {
-        // Reference to the CharacterController component for handling movement
         public CharacterController controller;
 
-        // Movement speed of the player
         public float speed = 12f;
 
-        // Gravity applied to the player
         public float gravity = -9.81f;
 
-        // Height the player can jump
         public float jumpHeight = 3f;
 
-        // Transform used to check if the player is grounded
         public Transform groundCheck;
-
-        // Radius of the sphere used for ground detection
         public float groundDistance = 0.4f;
 
-        // Layer mask to identify what is considered ground
         public LayerMask groundMask;
 
-        // Velocity vector for vertical movement (gravity and jumping)
-        Vector3 velocity;
+        private Vector3 velocity;
 
-        // Boolean to check if the player is grounded
-        bool isGrounded;
-
+        private bool isGrounded;
         private bool canMove = true;
+
+        private InputSystem_Actions inputActions;
+        private Vector2 moveInput;
+        private bool jumpQueued;
+
+        void Awake()
+        {
+            if (controller == null)
+                controller = GetComponent<CharacterController>();
+
+            inputActions = new InputSystem_Actions();
+        }
+
+        // Mirror: called only for the local player instance
+        public override void OnStartLocalPlayer()
+        {
+            base.OnStartLocalPlayer();
+            EnableInput();
+        }
+
+        void OnEnable()
+        {
+            if (inputActions == null)
+                inputActions = new InputSystem_Actions();
+
+            EnableInput();
+        }
+
+
+        void OnDisable()
+        {
+            DisableInput();
+        }
+
+        private void EnableInput()
+        {
+            if (inputActions == null)
+                inputActions = new InputSystem_Actions();
+
+            // Enable only the Player action map
+            inputActions.Player.Enable();
+
+            // Subscribe to actions
+            inputActions.Player.Move.performed += OnMove;
+            inputActions.Player.Move.canceled += OnMove; // will give (0,0) when released
+
+            inputActions.Player.Jump.performed += OnJump;
+        }
+
+        private void DisableInput()
+        {
+            if (inputActions == null) return;
+
+            inputActions.Player.Move.performed -= OnMove;
+            inputActions.Player.Move.canceled -= OnMove;
+            inputActions.Player.Jump.performed -= OnJump;
+
+            inputActions.Player.Disable();
+        }
+
+        private void OnMove(InputAction.CallbackContext ctx)
+        {
+            moveInput = ctx.ReadValue<Vector2>();
+        }
+
+        private void OnJump(InputAction.CallbackContext ctx)
+        {
+            // we just queue the jump, handled in PlayerMove so timing stays consistent
+            if (ctx.performed)
+                jumpQueued = true;
+        }
 
         /// <summary>
         /// Unity's Update method, called once per frame.
@@ -48,20 +108,20 @@ namespace RaveSurvival
                 return;
             }
 
-            if (canMove)
+            if (!canMove)
+                return;
+
+            if (GameManager.Instance.gameType == GameManager.GameType.OnlineMultiplayer)
             {
-                if (GameManager.Instance.gameType == GameManager.GameType.OnlineMultiplayer)
-                {
-                    // Ensure the movement logic only applies to the local player
-                    if (isLocalPlayer)
-                    {
-                        PlayerMove();
-                    }
-                }
-                else
+                // Ensure the movement logic only applies to the local player
+                if (isLocalPlayer)
                 {
                     PlayerMove();
                 }
+            }
+            else
+            {
+                PlayerMove();
             }
         }
 
@@ -76,9 +136,8 @@ namespace RaveSurvival
                 velocity.y = -2f; // Small negative value to keep the player grounded
             }
 
-            // Get input for horizontal (x) and vertical (z) movement
-            float x = Input.GetAxis("Horizontal");
-            float z = Input.GetAxis("Vertical");
+            float x = moveInput.x; // left / right
+            float z = moveInput.y; // forward / back
 
             // Calculate the movement direction based on input and player orientation
             Vector3 move = transform.right * x + transform.forward * z;
@@ -86,12 +145,13 @@ namespace RaveSurvival
             // Move the player using the CharacterController
             controller.Move(move * speed * Time.deltaTime);
 
-            // Check if the jump button is pressed and the player is grounded
-            if (Input.GetButtonDown("Jump") && isGrounded)
+            // Check if jump was pressed and the player is grounded
+            if (jumpQueued && isGrounded)
             {
                 // Calculate the vertical velocity needed to achieve the desired jump height
                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             }
+            jumpQueued = false; // consume the jump input
 
             // Apply gravity to the vertical velocity
             velocity.y += gravity * Time.deltaTime;
@@ -99,6 +159,7 @@ namespace RaveSurvival
             // Apply the vertical velocity to the player
             controller.Move(velocity * Time.deltaTime);
         }
+
         public void SetCanMove(bool x)
         {
             canMove = x;
