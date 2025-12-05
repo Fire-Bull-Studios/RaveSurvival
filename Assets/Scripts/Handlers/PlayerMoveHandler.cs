@@ -8,23 +8,15 @@ namespace RaveSurvival
     public class PlayerMoveHandler : NetworkBehaviour
     {
         public CharacterController controller;
-
         public float speed = 12f;
-
         public float gravity = -9.81f;
-
         public float jumpHeight = 3f;
-
         public Transform groundCheck;
         public float groundDistance = 0.4f;
-
         public LayerMask groundMask;
-
         private Vector3 velocity;
-
         private bool isGrounded;
         private bool canMove = true;
-
         private InputSystem_Actions inputActions;
         private Vector2 moveInput;
         private bool jumpQueued;
@@ -52,7 +44,6 @@ namespace RaveSurvival
             EnableInput();
         }
 
-
         void OnDisable()
         {
             DisableInput();
@@ -69,7 +60,6 @@ namespace RaveSurvival
             // Subscribe to actions
             inputActions.Player.Move.performed += OnMove;
             inputActions.Player.Move.canceled += OnMove; // will give (0,0) when released
-
             inputActions.Player.Jump.performed += OnJump;
         }
 
@@ -80,7 +70,6 @@ namespace RaveSurvival
             inputActions.Player.Move.performed -= OnMove;
             inputActions.Player.Move.canceled -= OnMove;
             inputActions.Player.Jump.performed -= OnJump;
-
             inputActions.Player.Disable();
         }
 

@@ -3,7 +3,7 @@ using RaveSurvival;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
+using UnityEngine.InputSystem;
 
 public class Player : Entity
 {
@@ -46,6 +46,36 @@ public class Player : Entity
     Vector3 meshPos = new Vector3(0.1f, -1.675f, -0.1f);
     string ammoStr;
 
+    private InputSystem_Actions inputActions;
+    private bool shootHeld = false;
+    private bool reloadPressed = false;
+
+
+    void Awake()
+    {
+        inputActions = new InputSystem_Actions();
+
+    }
+
+    void OnEnable()
+    {
+        if (inputActions == null)
+            inputActions = new InputSystem_Actions();
+
+        inputActions.Player.Enable();
+
+        inputActions.Player.Shoot.performed += OnShoot;
+        inputActions.Player.Shoot.canceled += OnShoot;
+        inputActions.Player.Reload.performed += OnReload;
+    }
+
+    void OnDisable()
+    {
+        inputActions.Player.Shoot.performed -= OnShoot;
+        inputActions.Player.Shoot.canceled -= OnShoot;
+        inputActions.Player.Reload.performed -= OnReload;
+        inputActions.Player.Disable();
+    }
 
 
     /// <summary>
@@ -108,7 +138,7 @@ public class Player : Entity
                 return;
             }
 
-            if (Input.GetButton("Fire1"))
+            if (shootHeld)
             {
                 if (GameManager.Instance.gameType == GameManager.GameType.OnlineMultiplayer)
                 {
@@ -119,16 +149,19 @@ public class Player : Entity
                     gun.Fire(Time.time, damageMult);
                     AlertNearEnemies();
                 }
+
                 ammoStr = $"{gun.magazineAmmo} / {gun.totalAmmo}";
                 uIManager.SetAmmoText(ammoStr);
             }
-
-            if (Input.GetKeyDown(KeyCode.R))
+            if (reloadPressed)
             {
+                reloadPressed = false;
+
                 gun.Reload();
                 ammoStr = $"{gun.magazineAmmo} / {gun.totalAmmo}";
                 uIManager.SetAmmoText(ammoStr);
             }
+
         }
         if (canInteract)
         {
@@ -140,6 +173,17 @@ public class Player : Entity
             }
         }
     }
+
+    private void OnShoot(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
+    {
+        shootHeld = ctx.ReadValue<float>() > 0.5f;
+    }
+
+    private void OnReload(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
+    {
+        reloadPressed = true;
+    }
+
 
     private void AttachCamera(Camera camera)
     {

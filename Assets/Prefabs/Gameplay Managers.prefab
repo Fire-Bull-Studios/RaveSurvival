@@ -55,7 +55,7 @@ MonoBehaviour:
   syncInterval: 0
   players: []
   gameType: 3
-  difficulty: 0
+  difficulty: 1
   starterScene: DubstepDungeonV2
   enemyPrefabs:
   - {fileID: 8485471596439444230, guid: 77e7c10987825ef4e8c5b38fd06be399, type: 3}
