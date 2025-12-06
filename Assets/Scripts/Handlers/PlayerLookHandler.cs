@@ -1,34 +1,91 @@
 using System;
 using UnityEngine;
 using Mirror;
-using Mirror.BouncyCastle.Bcpg.Sig;
+using UnityEngine.InputSystem;
 
 namespace RaveSurvival
 {
     public class PlayerLookHandler : NetworkBehaviour
     {
-        // Sensitivity of the mouse for looking around
-        public float mouseSensitivity = 100f;
-
-        // Reference to the player's body transform for rotating the player
+        public float overallSensitivity = 100f;
         public Transform playerBody;
-
-        // Tracks the vertical rotation of the camera
         float xRotation = 0f;
         private bool canLook = true;
 
+        private InputSystem_Actions inputActions;
+        private Vector2 lookInput;   // x = yaw, y = pitch
+
+        [SerializeField]
+        private float mouseSensitivityMultiplier = 0.25f;
+        [SerializeField]
+        private float gamepadSensitiviyMultiplier = 1.25f;
+
+        void Awake()
+        {
+            inputActions = new InputSystem_Actions();
+        }
+
+        void OnEnable()
+        {
+            if (inputActions == null)
+                inputActions = new InputSystem_Actions();
+
+            EnableInput();
+        }
+
+        void OnDisable()
+        {
+            DisableInput();
+        }
+
+        private void EnableInput()
+        {
+            // Enable only the Player action map
+            inputActions.Player.Enable();
+
+            // Subscribe to Look action
+            inputActions.Player.Look.performed += OnLook;
+            inputActions.Player.Look.canceled += OnLook; // gives (0,0) when released
+        }
+
+        private void DisableInput()
+        {
+            if (inputActions == null) return;
+
+            inputActions.Player.Look.performed -= OnLook;
+            inputActions.Player.Look.canceled -= OnLook;
+            inputActions.Player.Disable();
+        }
+
+        private void OnLook(InputAction.CallbackContext ctx)
+        {
+            lookInput = ctx.ReadValue<Vector2>();
+
+            // Detect the device that triggered the input
+            if (ctx.control.device is Mouse)
+            {
+                // Mouse delta is huge — scale it DOWN
+                lookInput *= mouseSensitivityMultiplier;
+            }
+            else if (ctx.control.device is Gamepad)
+            {
+                // Gamepad values are small — maybe leave default
+                lookInput *= gamepadSensitiviyMultiplier;
+            }
+        }
+
         /// <summary>
-        /// Unity's Start method, called before the first frame update.
-        /// Locks the cursor to the center of the screen for the local player.
+        /// Locks the cursor for the local player.
         /// </summary>
         void Start()
         {
             if (GameManager.Instance == null)
             {
-                Debug.LogError("Error... tried to initalize player look handler without game manager instance");
+                Debug.LogError("Error... tried to initialize player look handler without game manager instance");
                 return;
             }
 
+            // Realistically this should only be done on the local player, but this matches your old logic.
             if (isLocalPlayer && GameManager.Instance.gameType == GameManager.GameType.OnlineMultiplayer)
             {
                 // Lock the cursor to the center of the screen and hide it
@@ -39,20 +96,18 @@ namespace RaveSurvival
 
         void Look()
         {
-            // Get mouse input for horizontal and vertical movement
-            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-            float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+            // Convert input into rotation deltas
+            float mouseX = lookInput.x * overallSensitivity * Time.deltaTime;
+            float mouseY = lookInput.y * overallSensitivity * Time.deltaTime;
 
-            // Adjust the vertical rotation based on mouse Y input
+            // Adjust the vertical rotation based on Y input (pitch)
             xRotation -= mouseY;
-
-            // Clamp the vertical rotation to prevent over-rotation
             xRotation = Math.Clamp(xRotation, -90f, 90f);
 
-            // Apply the vertical rotation to the camera
+            // Apply vertical rotation to the camera
             transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
 
-            // Rotate the player's body horizontally based on mouse X input
+            // Rotate the player's body horizontally based on X input (yaw)
             playerBody.Rotate(Vector3.up * mouseX);
         }
 
@@ -68,16 +123,17 @@ namespace RaveSurvival
                 return;
             }
 
-            if (canLook)
+            if (!canLook)
+                return;
+
+            if (GameManager.Instance.gameType == GameManager.GameType.OnlineMultiplayer)
             {
-                if (isLocalPlayer && GameManager.Instance.gameType == GameManager.GameType.OnlineMultiplayer)
-                {
+                if (isLocalPlayer)
                     Look();
-                }
-                else
-                {
-                    Look();
-                }
+            }
+            else
+            {
+                Look();
             }
         }
 
