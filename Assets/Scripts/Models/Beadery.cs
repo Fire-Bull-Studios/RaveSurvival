@@ -3,6 +3,7 @@ using UnityEngine;
 public class Beadery : Interactable
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public Camera beaderyCam;
     protected override void Start()
     {
         base.Start();
@@ -16,6 +17,9 @@ public class Beadery : Interactable
 
     public override void Interact(Player player)
     {
-        throw new System.NotImplementedException();
+        player.SwapToCamera(beaderyCam);
+        player.lookHandler.SetCursorActive(true);
+        player.SetCanShoot(false);
+        player.moveHandler.SetCanMove(false);
     }
 }

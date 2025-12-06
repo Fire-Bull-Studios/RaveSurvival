@@ -32,9 +32,9 @@ namespace RaveSurvival
             if (isLocalPlayer && GameManager.Instance.gameType == GameManager.GameType.OnlineMultiplayer)
             {
                 // Lock the cursor to the center of the screen and hide it
-                Cursor.lockState = CursorLockMode.Locked;
+                //Cursor.lockState = CursorLockMode.Locked;
             }
-            Cursor.lockState = CursorLockMode.Locked;
+            SetCursorActive(false);
         }
 
         void Look()
@@ -84,6 +84,18 @@ namespace RaveSurvival
         public void SetCanLook(bool x)
         {
             canLook = x;
+        }
+
+        public void SetCursorActive(bool x)
+        {
+            if(x)
+            {
+                Cursor.lockState = CursorLockMode.None;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+            }
         }
     }
 }

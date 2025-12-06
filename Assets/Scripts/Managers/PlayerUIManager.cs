@@ -20,11 +20,13 @@ public class PlayerUIManager : MonoBehaviour
     public TextMeshProUGUI ammoText;
     public TextMeshProUGUI interactText;
     public GameObject deathScreen;
+    public BeadUIHandler beadUI;
 
     void Start()
     {
         interactText.enabled = false;
-    } 
+        beadUI.Reset();
+    }
 
     public void ChangePlayerAttribute(PlayerAttribute attribute, int value)
     {
@@ -60,6 +62,11 @@ public class PlayerUIManager : MonoBehaviour
     public void DisableInteractText()
     {
         interactText.enabled = false;
+    }
+
+    public void UpdateBeadUI(int count, Bead.BeadType type)
+    {
+        beadUI.UpdateBeadCount(count, type);
     }
 
     private void changeAmmo()

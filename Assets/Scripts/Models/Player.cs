@@ -14,9 +14,13 @@ public class Player : Entity
         SpeedAdd,
         HealthAdd,
     }
+    public int commonBeads = 0;
+    public int rareBeads = 0;
+    public int mythicBeads = 0;
     public static readonly int PlayerLayer = 9;
     // Reference to the player's camera
     public Camera cam;
+    private Camera secondaryCam = null;
 
     public Animator animator;
     public GameObject mesh;
@@ -59,7 +63,7 @@ public class Player : Entity
         ammoStr = $"{gun.magazineAmmo} / {gun.totalAmmo}";
         uIManager.SetAmmoText(ammoStr);
         // Find the first camera in the scene
-        cam = FindFirstObjectByType<Camera>();
+        cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
 
         if (GameManager.Instance == null)
         {
@@ -141,6 +145,11 @@ public class Player : Entity
         }
     }
 
+    public void SetCanShoot(bool x)
+    {
+        canShoot = x;
+    }
+
     private void AttachCamera(Camera camera)
     {
         // Attach the camera to the player's camera position
@@ -152,6 +161,25 @@ public class Player : Entity
         gun.SetBulletStart(camera.gameObject.transform);
     }
 
+    public void SwapToCamera(Camera camera)
+    {
+        if (secondaryCam != null)
+        {
+            secondaryCam.enabled = false;
+            secondaryCam = null;
+        }
+        if (camera == cam)
+        {
+            cam.enabled = true;
+        }
+        else
+        {
+            camera.enabled = true;
+            cam.enabled = false;
+            secondaryCam = camera;
+        }
+    }
+
     private void MakeMeshChildOfCamera()
     {
         mesh.transform.parent = cam.gameObject.transform;
@@ -161,6 +189,31 @@ public class Player : Entity
     public float GetDamageMult()
     {
         return damageMult;
+    }
+
+    public void AddBead(Bead.BeadType type)
+    {
+        int temp = 0;
+        if (type == Bead.BeadType.common)
+        {
+            commonBeads++;
+            temp = commonBeads;
+        }
+        else if (type == Bead.BeadType.rare)
+        {
+            rareBeads++;
+            temp = rareBeads;
+        }
+        else if (type == Bead.BeadType.mythic)
+        {
+            mythicBeads++;
+            temp = mythicBeads;
+        }
+        else
+        {
+            DebugManager.Instance.Print("Cringe... invalide bead type", DebugManager.DebugLevel.Production);
+        }
+        uIManager.UpdateBeadUI(temp, type);
     }
 
     public override void AddKandi(Kandi kandi)
