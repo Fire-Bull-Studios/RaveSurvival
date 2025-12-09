@@ -1239,8 +1239,10 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  mouseSensitivity: 175
+  overallSensitivity: 100
   playerBody: {fileID: 399668213}
+  mouseSensitivityMultiplier: 0.25
+  gamepadSensitiviyMultiplier: 1.25
 --- !u!1 &1390192723
 GameObject:
   m_ObjectHideFlags: 0

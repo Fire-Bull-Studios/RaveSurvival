@@ -350,7 +350,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  mouseSensitivity: 175
+  overallSensitivity: 100
   playerBody: {fileID: 11793487347628270}
 --- !u!1001 &310032864667726580
 PrefabInstance:
@@ -993,6 +993,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 684696122522634289}
     m_Modifications:
+    - target: {fileID: -6822198571625438238, guid: 79aa49074244e9348a29a5c66c8d77a9, type: 3}
+      propertyPath: m_Radius
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -6822198571625438238, guid: 79aa49074244e9348a29a5c66c8d77a9, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3226005594510748628, guid: 79aa49074244e9348a29a5c66c8d77a9, type: 3}
       propertyPath: m_Name
       value: Pistol_01

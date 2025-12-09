@@ -72,7 +72,6 @@ public class Gun : Weapon
         bulletStart = start;
     }
 
-    // ...existing code...
     public bool Reload()
     {
         if (!hasAmmo)

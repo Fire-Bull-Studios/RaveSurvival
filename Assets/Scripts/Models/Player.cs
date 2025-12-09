@@ -26,7 +26,9 @@ public class Player : Entity
     public GameObject mesh;
 
     // Reference to the player's gun
-    public Gun gun;
+    public Gun[] guns = new Gun[2]; //0 = primary, 1 = secondary
+    public int currentWeaponIndex = 0;
+    public Gun gun => guns[currentWeaponIndex];
 
     // Player's scalars
     private float damageMult = 1.0f;
@@ -320,6 +322,11 @@ public class Player : Entity
                 enemy.PlayerSpotted(transform);
             }
         }
+    }
+
+    public bool HasWeapon(Weapon weapon)
+    {
+        return guns.Contains(weapon);
     }
 
     private void OnTriggerEnter(Collider collider)
