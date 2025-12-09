@@ -19,6 +19,7 @@ public class Bead : Interactable
 
     public override void Interact(Player player)
     {
+        player.AddBead(beadType);
         Destroy(this.gameObject);
         return;
     }
