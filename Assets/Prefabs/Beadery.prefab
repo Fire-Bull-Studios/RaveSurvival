@@ -25,16 +25,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3046146450758552968}
-  m_LocalRotation: {x: -0, y: 0.8305549, z: -0.55693686, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: -0.367}
-  m_LocalScale: {x: 2.1854334, y: 2.1854339, z: 2.1854336}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.72382355}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6300829051089412087}
+  m_Father: {fileID: 2071949645764211828}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.332, y: 0.325}
+  m_AnchoredPosition: {x: -0.6834948, y: 0.45081508}
   m_SizeDelta: {x: 0.96, y: 0.36}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &1468986751547361059
@@ -264,7 +264,7 @@ Camera:
   m_ShutterSpeed: 0.005
   m_Aperture: 16
   m_FocusDistance: 10
-  m_FocalLength: 50
+  m_FocalLength: 20.78461
   m_BladeCount: 5
   m_Curvature: {x: 2, y: 11}
   m_BarrelClipping: 0.25
@@ -279,13 +279,13 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 60.000004
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 7223
+    m_Bits: 7287
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -401,6 +401,9 @@ PrefabInstance:
       addedObject: {fileID: 8128772762099749312}
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: f02d1136e41782f45af6199761040859, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 4764709454250668563}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: f02d1136e41782f45af6199761040859, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 6300829051089412087}
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: f02d1136e41782f45af6199761040859, type: 3}
       insertIndex: -1
@@ -435,6 +438,16 @@ MonoBehaviour:
   interactName: Beadery
   action: interact with
   beaderyCam: {fileID: 7409795849439904379}
+  isInteracting: 0
+  obstructionMask:
+    serializedVersion: 2
+    m_Bits: 64
+  disableMaterial: {fileID: 2100000, guid: 2366e5d349237ed42b867eaafa38792b, type: 2}
+  interactOptions:
+  - {fileID: 6557677197481096023}
+  - {fileID: 4595270785178219082}
+  - {fileID: 6968655673902241879}
+  crank: {fileID: 1766990970479810912}
 --- !u!4 &2071949645764211828 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f02d1136e41782f45af6199761040859, type: 3}
@@ -496,16 +509,70 @@ PrefabInstance:
       propertyPath: m_Name
       value: CommonButton
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 38e66a57870b95943a8f36e65d10963a, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 38e66a57870b95943a8f36e65d10963a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6557677197481096023}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 38e66a57870b95943a8f36e65d10963a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7659986683537263382}
   m_SourcePrefab: {fileID: 100100000, guid: 38e66a57870b95943a8f36e65d10963a, type: 3}
 --- !u!4 &2676883214298856270 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 38e66a57870b95943a8f36e65d10963a, type: 3}
   m_PrefabInstance: {fileID: 2498524058535091365}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &3345580466342027764 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 38e66a57870b95943a8f36e65d10963a, type: 3}
+  m_PrefabInstance: {fileID: 2498524058535091365}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6557677197481096023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3345580466342027764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc0b1b81e777c004ebef56963cc8d3c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: RaveSurvival::InteractOptions
+  commonCost: 0
+  rareCost: 0
+  mythicCost: 0
+  isEnabled: 1
+  selected: 0
+  hovered: 0
+--- !u!65 &7659986683537263382
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3345580466342027764}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.0031999997, y: 0.0036454517, z: 0.0031999992}
+  m_Center: {x: -1.7462298e-10, y: -0.00022272661, z: 0}
 --- !u!1001 &2529397970553821756
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -644,16 +711,70 @@ PrefabInstance:
       propertyPath: m_Name
       value: RareButton
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7ba1141345fc7b14391a39cb4f360f0d, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7ba1141345fc7b14391a39cb4f360f0d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4595270785178219082}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7ba1141345fc7b14391a39cb4f360f0d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3055504856582309275}
   m_SourcePrefab: {fileID: 100100000, guid: 7ba1141345fc7b14391a39cb4f360f0d, type: 3}
 --- !u!4 &3540625619617717434 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7ba1141345fc7b14391a39cb4f360f0d, type: 3}
   m_PrefabInstance: {fileID: 3938517998151367505}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4208900349337421312 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 7ba1141345fc7b14391a39cb4f360f0d, type: 3}
+  m_PrefabInstance: {fileID: 3938517998151367505}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4595270785178219082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4208900349337421312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc0b1b81e777c004ebef56963cc8d3c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: RaveSurvival::InteractOptions
+  commonCost: 0
+  rareCost: 0
+  mythicCost: 0
+  isEnabled: 1
+  selected: 0
+  hovered: 0
+--- !u!65 &3055504856582309275
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4208900349337421312}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.0031999997, y: 0.0036454517, z: 0.0031999992}
+  m_Center: {x: 0.0000000035506673, y: -0.00022272661, z: 9.313226e-10}
 --- !u!1001 &5436477205426104201
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -710,11 +831,65 @@ PrefabInstance:
       propertyPath: m_Name
       value: MythicButton
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 151d9ae8aa3651b4387e633b2e6e0652, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 151d9ae8aa3651b4387e633b2e6e0652, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6968655673902241879}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 151d9ae8aa3651b4387e633b2e6e0652, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7217105496626000693}
   m_SourcePrefab: {fileID: 100100000, guid: 151d9ae8aa3651b4387e633b2e6e0652, type: 3}
+--- !u!1 &5166568748045523672 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 151d9ae8aa3651b4387e633b2e6e0652, type: 3}
+  m_PrefabInstance: {fileID: 5436477205426104201}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6968655673902241879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5166568748045523672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc0b1b81e777c004ebef56963cc8d3c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: RaveSurvival::InteractOptions
+  commonCost: 250
+  rareCost: 0
+  mythicCost: 0
+  isEnabled: 1
+  selected: 0
+  hovered: 0
+--- !u!65 &7217105496626000693
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5166568748045523672}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.0031999997, y: 0.0036454517, z: 0.003199999}
+  m_Center: {x: -1.7462298e-10, y: -0.00022272661, z: -2.9103825e-10}
 --- !u!4 &5546330600141684834 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 151d9ae8aa3651b4387e633b2e6e0652, type: 3}
@@ -784,20 +959,83 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1018664272722485354, guid: 6c181143a5cd5e24fbc22a08fb8987a1, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -1018664272722485354, guid: 6c181143a5cd5e24fbc22a08fb8987a1, type: 3}
+      propertyPath: m_TagString
+      value: Crank
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 6c181143a5cd5e24fbc22a08fb8987a1, type: 3}
       propertyPath: m_Name
       value: Crank
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6c181143a5cd5e24fbc22a08fb8987a1, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6c181143a5cd5e24fbc22a08fb8987a1, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4764709454250668563}
-    m_AddedComponents: []
+      addedObject: {fileID: 1766990970479810912}
+    - targetCorrespondingSourceObject: {fileID: -1018664272722485354, guid: 6c181143a5cd5e24fbc22a08fb8987a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4775543588747402358}
   m_SourcePrefab: {fileID: 100100000, guid: 6c181143a5cd5e24fbc22a08fb8987a1, type: 3}
+--- !u!23 &528961100659006822 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 6317578925029434746, guid: 6c181143a5cd5e24fbc22a08fb8987a1, type: 3}
+  m_PrefabInstance: {fileID: 5835455512448612380}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2388959367939925898 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -1018664272722485354, guid: 6c181143a5cd5e24fbc22a08fb8987a1, type: 3}
+  m_PrefabInstance: {fileID: 5835455512448612380}
+  m_PrefabAsset: {fileID: 0}
+--- !u!135 &4775543588747402358
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2388959367939925898}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.002
+  m_Center: {x: -6.9849204e-10, y: 8.149072e-10, z: -2.4286129e-17}
 --- !u!4 &6300829051089412087 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6c181143a5cd5e24fbc22a08fb8987a1, type: 3}
   m_PrefabInstance: {fileID: 5835455512448612380}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6645863958602646861 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6c181143a5cd5e24fbc22a08fb8987a1, type: 3}
+  m_PrefabInstance: {fileID: 5835455512448612380}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1766990970479810912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6645863958602646861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6a557c1be64eca44a59ef72056a657d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: RaveSurvival::CrankHandler
+  knob: {fileID: 528961100659006822}
+  obstructionMask:
+    serializedVersion: 2
+    m_Bits: 64

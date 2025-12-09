@@ -6,6 +6,7 @@ TagManager:
   tags:
   - SpawnPointParent
   - Interactable
+  - Crank
   layers:
   - Default
   - TransparentFX
@@ -13,7 +14,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - InteractOption
   - 
   - 
   - Player

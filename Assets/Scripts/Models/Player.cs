@@ -71,6 +71,7 @@ public class Player : Entity
         inputActions.Player.Shoot.performed += OnShoot;
         inputActions.Player.Shoot.canceled += OnShoot;
         inputActions.Player.Reload.performed += OnReload;
+        inputActions.Player.Exit.performed += OnExit;
     }
 
     void OnDisable()
@@ -78,9 +79,18 @@ public class Player : Entity
         inputActions.Player.Shoot.performed -= OnShoot;
         inputActions.Player.Shoot.canceled -= OnShoot;
         inputActions.Player.Reload.performed -= OnReload;
+        inputActions.Player.Exit.performed -= OnExit;
         inputActions.Player.Disable();
     }
 
+    private void OnExit(InputAction.CallbackContext ctx)
+    {
+        SwapToCamera(cam);
+        lookHandler.SetCursorActive(false);
+        lookHandler.SetCanLook(true);
+        SetCanShoot(true);
+        moveHandler.SetCanMove(true);
+    }
 
     /// <summary>
     /// Unity's Start method, called before the first frame update.

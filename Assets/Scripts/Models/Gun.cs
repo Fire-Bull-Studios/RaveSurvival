@@ -206,6 +206,7 @@ public class Gun : Weapon
                     GameObject impactFx = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
                     Destroy(impactFx, 2f);
                 }
+                Debug.DrawRay(originPosition, direction, Color.red);
             }
             else if (bulletType == BulletType.PROJECTILE)
             {
