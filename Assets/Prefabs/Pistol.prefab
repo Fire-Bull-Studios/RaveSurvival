@@ -191,8 +191,8 @@ GameObject:
   - component: {fileID: 8740943214968898305}
   - component: {fileID: -6822198571625438238}
   m_Layer: 9
-  m_Name: Pistol_01
-  m_TagString: Untagged
+  m_Name: Pistol
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -233,11 +233,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50deb69a81ce8374bacb404a14d1a164, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
-  damage: 10
   range: 100
+  isInstantInteract: 0
+  interactName: item
+  action: interact with
+  damage: 10
+  fireRange: 100
   soundRange: 25
   owner: {fileID: 0}
   velocity: 15

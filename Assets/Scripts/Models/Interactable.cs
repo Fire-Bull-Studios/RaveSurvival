@@ -15,9 +15,12 @@ public abstract class Interactable : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected virtual void Start()
     {
-        col = gameObject.AddComponent<SphereCollider>();
-        col.radius = range;
-        col.isTrigger = true;
+        if (!gameObject.GetComponent<SphereCollider>())
+        {
+            col = gameObject.AddComponent<SphereCollider>();
+            col.radius = range;
+            col.isTrigger = true;
+        }
     }
 
     public abstract void Interact(Player player);

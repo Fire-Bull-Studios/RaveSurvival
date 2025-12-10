@@ -30,7 +30,6 @@ public class BeadUIHandler : MonoBehaviour
 
     public void Reset()
     {
-        Debug.Log("HERE!!!");
         commonBeadTxt.text = "0";
         rareBeadTxt.text = "0";
         mythicBeadTxt.text = "0";

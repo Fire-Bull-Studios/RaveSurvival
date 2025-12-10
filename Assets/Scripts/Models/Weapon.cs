@@ -2,10 +2,10 @@ using Mirror;
 using UnityEngine;
 using RaveSurvival;
 
-public class Weapon : NetworkBehaviour
+public class Weapon : Interactable
 {
     public float damage = 10f;
-    public float range = 100f;
+    public float fireRange = 100f;
     public float soundRange = 100f;
     public Entity owner = null;
 
@@ -23,14 +23,21 @@ public class Weapon : NetworkBehaviour
         }
     }
 
-    public override void OnStartLocalPlayer()
+    // public override void OnStartLocalPlayer()
+    // {
+    //     base.OnStartLocalPlayer();
+    //     isReady = true;
+    // }
+
+    public override void Interact(Player player)
     {
-        base.OnStartLocalPlayer();
-        isReady = true;
+        DebugManager.Instance.Print("Im interacting with you from the weapon class mother fuh", DebugManager.DebugLevel.Verbose);
+
     }
 
-    public virtual void Start()
+    protected override void Start()
     {
+        base.Start();
         isReady = true;
     }
 

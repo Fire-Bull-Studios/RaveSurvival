@@ -116,7 +116,7 @@ namespace RaveSurvival
 
         public GameObject[] GetEnemyPrefabs()
         {
-            Debug.Log($"BRUHHHHH What is the prefab name: {enemyPrefabs.First().name}");
+            DebugManager.Instance.Print($"BRUHHHHH What is the prefab name: {enemyPrefabs.First().name}", DebugManager.DebugLevel.Paul);
             return enemyPrefabs;
         }
 

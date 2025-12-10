@@ -74,6 +74,7 @@ public class Player : Entity
         inputActions.Player.Shoot.canceled += OnShoot;
         inputActions.Player.Reload.performed += OnReload;
         inputActions.Player.Exit.performed += OnExit;
+        inputActions.Player.Interact.performed += OnInteract;
     }
 
     void OnDisable()
@@ -82,6 +83,7 @@ public class Player : Entity
         inputActions.Player.Shoot.canceled -= OnShoot;
         inputActions.Player.Reload.performed -= OnReload;
         inputActions.Player.Exit.performed -= OnExit;
+        inputActions.Player.Interact.performed -= OnInteract;
         inputActions.Player.Disable();
     }
 
@@ -158,7 +160,7 @@ public class Player : Entity
             {
                 if (GameManager.Instance.gameType == GameManager.GameType.OnlineMultiplayer)
                 {
-                    gun.OnlineFire(Time.time);
+                    //gun.OnlineFire(Time.time);
                 }
                 else
                 {
@@ -179,15 +181,15 @@ public class Player : Entity
             }
 
         }
-        if (canInteract)
-        {
-            if (Input.GetKeyDown(KeyCode.E) && curCollided.Count > 0)
-            {
-                Interactable interact = curCollided.Last();
-                RemoveInteractItem(interact);
-                interact.Interact(this);
-            }
-        }
+        // if (canInteract)
+        // {
+        //     if (Input.GetKeyDown(KeyCode.E) && curCollided.Count > 0)
+        //     {
+        //         Interactable interact = curCollided.Last();
+        //         RemoveInteractItem(interact);
+        //         interact.Interact(this);
+        //     }
+        // }
     }
 
     public void SetCanShoot(bool x)
@@ -195,16 +197,30 @@ public class Player : Entity
         canShoot = x;
     }
 
-    private void OnShoot(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
+    private void OnShoot(InputAction.CallbackContext ctx)
     {
         shootHeld = ctx.ReadValue<float>() > 0.5f;
     }
 
-    private void OnReload(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
+    private void OnReload(InputAction.CallbackContext ctx)
     {
         reloadPressed = true;
     }
 
+    private void OnInteract(InputAction.CallbackContext ctx)
+    {
+        if (!canInteract)
+        {
+            return;
+        }
+        if (curCollided.Count == 0)
+        {
+            return;
+        }
+        Interactable interact = curCollided.Last();
+        RemoveInteractItem(interact);
+        interact.Interact(this);
+    }
 
     private void AttachCamera(Camera camera)
     {
@@ -343,6 +359,13 @@ public class Player : Entity
                 }
                 else
                 {
+                    if (collider.gameObject.tag.ToLower() == "weapon")
+                    {
+                        if (guns.Contains(collider.gameObject.GetComponent<Gun>()))
+                        {
+                            return;
+                        }
+                    }
                     curCollided.Add(interact);
                     uIManager.SetInteractText($"Press {interactBtn} to {interact.GetAction()} {interact.GetName()}");
                 }
