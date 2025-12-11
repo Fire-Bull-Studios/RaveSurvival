@@ -34,4 +34,9 @@ public class Entity : NetworkBehaviour
     {
         return;
     }
+
+    public virtual void AddWeapon(Weapon weapon)
+    {
+        return;
+    }
 }

@@ -75,6 +75,7 @@ public class Player : Entity
         inputActions.Player.Reload.performed += OnReload;
         inputActions.Player.Exit.performed += OnExit;
         inputActions.Player.Interact.performed += OnInteract;
+        inputActions.Player.WeaponSwap.performed += OnWeaponSwap;
     }
 
     void OnDisable()
@@ -84,6 +85,7 @@ public class Player : Entity
         inputActions.Player.Reload.performed -= OnReload;
         inputActions.Player.Exit.performed -= OnExit;
         inputActions.Player.Interact.performed -= OnInteract;
+        inputActions.Player.WeaponSwap.performed -= OnWeaponSwap;
         inputActions.Player.Disable();
     }
 
@@ -222,6 +224,25 @@ public class Player : Entity
         interact.Interact(this);
     }
 
+    private void OnWeaponSwap(InputAction.CallbackContext ctx)
+    {
+        if (guns[0] == null || guns[1] == null)
+        {
+            return;
+        }
+
+        guns[currentWeaponIndex].gameObject.SetActive(false);
+        currentWeaponIndex = currentWeaponIndex == 0 ? 1 : 0;
+        guns[currentWeaponIndex].gameObject.SetActive(true);
+        //TODO: Implement a weapon type enum so this can scale
+        //with different weapons
+        animator.SetInteger("Weapon", currentWeaponIndex);
+        //TODO seperate gun ammo UI logic
+        ammoStr = $"{gun.magazineAmmo} / {gun.totalAmmo}";
+        uIManager.SetAmmoText(ammoStr);
+        gun.SetBulletStart(cam.transform);
+    }
+
     private void AttachCamera(Camera camera)
     {
         // Attach the camera to the player's camera position
@@ -302,6 +323,13 @@ public class Player : Entity
                 break;
         }
         kandiManager.AddKandi(kandi.kandiModel);
+    }
+
+    public override void AddWeapon(Weapon weapon)
+    {
+        guns[System.Array.FindIndex(guns, g => g == null)] = (Gun)weapon;
+        weapon.gameObject.transform.parent = gun.gameObject.transform.parent;
+        weapon.gameObject.SetActive(false);
     }
 
     /// <summary>

@@ -31,8 +31,12 @@ public class Weapon : Interactable
 
     public override void Interact(Player player)
     {
-        DebugManager.Instance.Print("Im interacting with you from the weapon class mother fuh", DebugManager.DebugLevel.Verbose);
-
+        DebugManager.Instance.Print("Im interacting with you from the weapon class mother fuh", DebugManager.DebugLevel.Paul);
+        bool isEmptySlotAvailable = System.Array.Exists(player.guns, gun => gun == null);
+        if (isEmptySlotAvailable)
+        {
+            player.AddWeapon(this);
+        }
     }
 
     protected override void Start()
