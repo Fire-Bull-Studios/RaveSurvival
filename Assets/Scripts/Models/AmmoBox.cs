@@ -11,7 +11,7 @@ namespace RaveSurvival
             {
 
                 Player player = other.gameObject.GetComponent<Player>();
-                if (player.gun.AddAmmo())
+                if (player && player.gun.AddAmmo())
                 {
                     player.uIManager.SetAmmoText($"{player.gun.magazineAmmo} / {player.gun.totalAmmo}");
                 }

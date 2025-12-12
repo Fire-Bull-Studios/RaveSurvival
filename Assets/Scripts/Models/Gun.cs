@@ -1,10 +1,5 @@
-using System;
-using Mirror;
-using NUnit.Framework;
-using NUnit.Framework.Constraints;
 using RaveSurvival;
 using UnityEngine;
-using UnityEngine.SocialPlatforms;
 
 public class Gun : Weapon
 {
@@ -18,6 +13,8 @@ public class Gun : Weapon
 
     public BulletType bulletType = BulletType.RAYCAST;
 
+    public GunType gunType = GunType.PISTOL;
+
     [SerializeField]
     public Transform bulletStart;
     public ParticleSystem muzzleFlash;
@@ -30,7 +27,16 @@ public class Gun : Weapon
     {
         RAYCAST = 0,
         PROJECTILE
-    }
+    };
+
+    public enum GunType
+    {
+        PISTOL = 0,
+        RIFLE
+    };
+
+    public Vector3 startingPosition;
+    public Vector3 startingRotation;
 
     public uint startingAmmo = 144;
     public uint magazineSize = 12;

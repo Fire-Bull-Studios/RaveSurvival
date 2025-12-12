@@ -1,6 +1,4 @@
 using System;
-using Mirror.BouncyCastle.Bcpg.Sig;
-using PlasticGui;
 using UnityEngine;
 
 public abstract class Interactable : MonoBehaviour

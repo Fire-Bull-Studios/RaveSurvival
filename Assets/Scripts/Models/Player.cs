@@ -183,15 +183,6 @@ public class Player : Entity
             }
 
         }
-        // if (canInteract)
-        // {
-        //     if (Input.GetKeyDown(KeyCode.E) && curCollided.Count > 0)
-        //     {
-        //         Interactable interact = curCollided.Last();
-        //         RemoveInteractItem(interact);
-        //         interact.Interact(this);
-        //     }
-        // }
     }
 
     public void SetCanShoot(bool x)
@@ -234,9 +225,9 @@ public class Player : Entity
         guns[currentWeaponIndex].gameObject.SetActive(false);
         currentWeaponIndex = currentWeaponIndex == 0 ? 1 : 0;
         guns[currentWeaponIndex].gameObject.SetActive(true);
-        //TODO: Implement a weapon type enum so this can scale
-        //with different weapons
-        animator.SetInteger("Weapon", currentWeaponIndex);
+        animator.SetInteger("Weapon", (int)guns[currentWeaponIndex].gunType);
+        gun.transform.localPosition = gun.startingPosition;
+        gun.transform.localEulerAngles = gun.startingRotation;
         //TODO seperate gun ammo UI logic
         ammoStr = $"{gun.magazineAmmo} / {gun.totalAmmo}";
         uIManager.SetAmmoText(ammoStr);
