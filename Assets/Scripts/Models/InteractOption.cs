@@ -12,7 +12,7 @@ public class InteractOption : MonoBehaviour
     private Color initColor;
 
     Material mat;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
         mat = GetComponent<Renderer>().material;
@@ -20,12 +20,6 @@ public class InteractOption : MonoBehaviour
         {
             initColor = mat.color;
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public void CheckDisabled(int common, int rare, int mythic)

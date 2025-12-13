@@ -7,6 +7,7 @@ TagManager:
   - SpawnPointParent
   - Interactable
   - Crank
+  - Weapon
   layers:
   - Default
   - TransparentFX

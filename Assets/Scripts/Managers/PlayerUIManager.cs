@@ -1,6 +1,6 @@
 using System;
-using System.Xml.Serialization;
-using Codice.Client.BaseCommands.Import;
+using System.Collections.Generic;
+using RaveSurvival;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,6 +21,27 @@ public class PlayerUIManager : MonoBehaviour
     public TextMeshProUGUI interactText;
     public GameObject deathScreen;
     public BeadUIHandler beadUI;
+
+    [Serializable]
+    public struct WeaponIconEntry
+    {
+        public Gun.GunType gunType;
+        public Sprite icon;
+    }
+    [SerializeField]
+    private WeaponIconEntry[] weaponIcons;
+    private Dictionary<Gun.GunType, Sprite> weaponMap;
+
+    public Image weaponIcon;
+
+    void Awake()
+    {
+        weaponMap = new Dictionary<Gun.GunType, Sprite>();
+        foreach (var entry in weaponIcons)
+        {
+            weaponMap[entry.gunType] = entry.icon;
+        }
+    }
 
     void Start()
     {
@@ -69,8 +90,17 @@ public class PlayerUIManager : MonoBehaviour
         beadUI.UpdateBeadCount(count, type);
     }
 
-    private void changeAmmo()
+    public void SetWeaponIcon(Gun.GunType gunType)
     {
-
+        if (weaponMap.TryGetValue(gunType, out Sprite icon))
+        {
+            weaponIcon.sprite = icon;
+            weaponIcon.enabled = true;
+        }
+        else
+        {
+            DebugManager.Instance.Print($"No weapon icon mapped for {gunType}", DebugManager.DebugLevel.Minimal);
+            weaponIcon.enabled = false;
+        }
     }
 }

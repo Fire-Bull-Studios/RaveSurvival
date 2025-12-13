@@ -26,7 +26,9 @@ public class Player : Entity
     public GameObject mesh;
 
     // Reference to the player's gun
-    public Gun gun;
+    public Gun[] guns = new Gun[2]; //0 = primary, 1 = secondary
+    public int currentWeaponIndex = 0;
+    public Gun gun => guns[currentWeaponIndex];
 
     // Player's scalars
     private float damageMult = 1.0f;
@@ -47,7 +49,7 @@ public class Player : Entity
 
     public String interactBtn = "E";
 
-    Vector3 meshPos = new Vector3(0.1f, -1.675f, -0.1f);
+    Vector3 meshPos = new Vector3(0.0875f, -1.6275f, -0.16f);
     string ammoStr;
 
     private InputSystem_Actions inputActions;
@@ -72,6 +74,8 @@ public class Player : Entity
         inputActions.Player.Shoot.canceled += OnShoot;
         inputActions.Player.Reload.performed += OnReload;
         inputActions.Player.Exit.performed += OnExit;
+        inputActions.Player.Interact.performed += OnInteract;
+        inputActions.Player.WeaponSwap.performed += OnWeaponSwap;
     }
 
     void OnDisable()
@@ -80,6 +84,8 @@ public class Player : Entity
         inputActions.Player.Shoot.canceled -= OnShoot;
         inputActions.Player.Reload.performed -= OnReload;
         inputActions.Player.Exit.performed -= OnExit;
+        inputActions.Player.Interact.performed -= OnInteract;
+        inputActions.Player.WeaponSwap.performed -= OnWeaponSwap;
         inputActions.Player.Disable();
     }
 
@@ -156,7 +162,7 @@ public class Player : Entity
             {
                 if (GameManager.Instance.gameType == GameManager.GameType.OnlineMultiplayer)
                 {
-                    gun.OnlineFire(Time.time);
+                    //gun.OnlineFire(Time.time);
                 }
                 else
                 {
@@ -177,15 +183,6 @@ public class Player : Entity
             }
 
         }
-        if (canInteract)
-        {
-            if (Input.GetKeyDown(KeyCode.E) && curCollided.Count > 0)
-            {
-                Interactable interact = curCollided.Last();
-                RemoveInteractItem(interact);
-                interact.Interact(this);
-            }
-        }
     }
 
     public void SetCanShoot(bool x)
@@ -193,16 +190,49 @@ public class Player : Entity
         canShoot = x;
     }
 
-    private void OnShoot(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
+    private void OnShoot(InputAction.CallbackContext ctx)
     {
         shootHeld = ctx.ReadValue<float>() > 0.5f;
     }
 
-    private void OnReload(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
+    private void OnReload(InputAction.CallbackContext ctx)
     {
         reloadPressed = true;
     }
 
+    private void OnInteract(InputAction.CallbackContext ctx)
+    {
+        if (!canInteract)
+        {
+            return;
+        }
+        if (curCollided.Count == 0)
+        {
+            return;
+        }
+        Interactable interact = curCollided.Last();
+        RemoveInteractItem(interact);
+        interact.Interact(this);
+    }
+
+    private void OnWeaponSwap(InputAction.CallbackContext ctx)
+    {
+        if (guns[0] == null || guns[1] == null)
+        {
+            return;
+        }
+
+        guns[currentWeaponIndex].gameObject.SetActive(false);
+        currentWeaponIndex = currentWeaponIndex == 0 ? 1 : 0;
+        guns[currentWeaponIndex].gameObject.SetActive(true);
+        animator.SetInteger("Weapon", (int)guns[currentWeaponIndex].gunType);
+        gun.transform.localPosition = gun.startingPosition;
+        gun.transform.localEulerAngles = gun.startingRotation;
+        ammoStr = $"{gun.magazineAmmo} / {gun.totalAmmo}";
+        uIManager.SetAmmoText(ammoStr);
+        uIManager.SetWeaponIcon(guns[currentWeaponIndex].gunType);
+        gun.SetBulletStart(cam.transform);
+    }
 
     private void AttachCamera(Camera camera)
     {
@@ -286,6 +316,13 @@ public class Player : Entity
         kandiManager.AddKandi(kandi.kandiModel);
     }
 
+    public override void AddWeapon(Weapon weapon)
+    {
+        guns[System.Array.FindIndex(guns, g => g == null)] = (Gun)weapon;
+        weapon.gameObject.transform.parent = gun.gameObject.transform.parent;
+        weapon.gameObject.SetActive(false);
+    }
+
     /// <summary>
     /// Reduces the player's health when taking damage.
     /// If health reaches zero, logs a message indicating the player was killed.
@@ -322,6 +359,11 @@ public class Player : Entity
         }
     }
 
+    public bool HasWeapon(Weapon weapon)
+    {
+        return guns.Contains(weapon);
+    }
+
     private void OnTriggerEnter(Collider collider)
     {
         Interactable interact = collider.gameObject.GetComponent<Interactable>();
@@ -336,6 +378,13 @@ public class Player : Entity
                 }
                 else
                 {
+                    if (collider.gameObject.tag.ToLower() == "weapon")
+                    {
+                        if (guns.Contains(collider.gameObject.GetComponent<Gun>()))
+                        {
+                            return;
+                        }
+                    }
                     curCollided.Add(interact);
                     uIManager.SetInteractText($"Press {interactBtn} to {interact.GetAction()} {interact.GetName()}");
                 }
