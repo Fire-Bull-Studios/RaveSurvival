@@ -206,7 +206,7 @@ public class Gun : Weapon
                 if (Physics.Raycast(originPosition, direction, out hit, fireRange))
                 {
                     Entity entity = hit.transform.GetComponent<Entity>();
-                    if (entity != null && entity.name != owner.name)
+                    if (entity != null && owner != null && entity.name != owner.name)
                     {
                         entity.TakeDamage(finalDamage, bulletStart, originPosition, entity);
                     }
