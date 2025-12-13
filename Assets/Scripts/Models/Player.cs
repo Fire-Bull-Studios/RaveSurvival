@@ -228,9 +228,9 @@ public class Player : Entity
         animator.SetInteger("Weapon", (int)guns[currentWeaponIndex].gunType);
         gun.transform.localPosition = gun.startingPosition;
         gun.transform.localEulerAngles = gun.startingRotation;
-        //TODO seperate gun ammo UI logic
         ammoStr = $"{gun.magazineAmmo} / {gun.totalAmmo}";
         uIManager.SetAmmoText(ammoStr);
+        uIManager.SetWeaponIcon(guns[currentWeaponIndex].gunType);
         gun.SetBulletStart(cam.transform);
     }
 

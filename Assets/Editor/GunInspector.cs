@@ -17,6 +17,8 @@ public class GunInspector : Editor
   FloatField velocity;
   EnumField weaponType;
   EnumField gunType;
+  IntegerField startingAmmo;
+  IntegerField magazineSize;
   Vector3Field startPos;
   Vector3Field startRot;
   ObjectField fireSound;
@@ -37,6 +39,8 @@ public class GunInspector : Editor
     velocity = new("Velocity") { bindingPath = "velocity" };
     weaponType = new("Bullet Type") { bindingPath = "bulletType" };
     gunType = new("Gun Type") { bindingPath = "gunType" };
+    startingAmmo = new("Starting Ammo") { bindingPath = "startingAmmo" };
+    magazineSize = new("Magazine Size") { bindingPath = "magazineSize" };
     startPos = new("Starting Position") { bindingPath = "startingPosition" };
     startRot = new("Starting Rotation") { bindingPath = "startingRotation" };
     fireSound = new("Fire Sound") { bindingPath = "fireSound" };
@@ -52,6 +56,8 @@ public class GunInspector : Editor
     myInspector.Add(soundRange);
     myInspector.Add(weaponType);
     myInspector.Add(gunType);
+    myInspector.Add(startingAmmo);
+    myInspector.Add(magazineSize);
     myInspector.Add(fireSound);
     myInspector.Add(startPos);
     myInspector.Add(startRot);

@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 8203714804174290797}
   - component: {fileID: -6082207441927804694}
   - component: {fileID: 8224358734902043213}
-  - component: {fileID: 5429763924606135116}
   - component: {fileID: -3110097712175193194}
   m_Layer: 9
   m_Name: M4
@@ -130,7 +129,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.259
+  m_Volume: 0.55
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -235,23 +234,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0.0053232866, y: 0.035991378, z: 0.21108788}
---- !u!114 &5429763924606135116
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8203714804183633069}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Mirror::Mirror.NetworkIdentity
-  sceneId: 0
-  _assetId: 4153054444
-  serverOnly: 0
-  visibility: 0
-  hasSpawned: 0
 --- !u!114 &-3110097712175193194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,27 +246,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50deb69a81ce8374bacb404a14d1a164, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 100
+  range: 300
   isInstantInteract: 0
   interactName: item
   action: interact with
-  damage: 10
+  damage: 15
   fireRange: 100
   soundRange: 25
   owner: {fileID: 0}
   velocity: 15
-  fireRate: 5
+  fireRate: 10
   bulletType: 0
   gunType: 1
   bulletStart: {fileID: 1059180939534877812}
   muzzleFlash: {fileID: 1017859967600927962}
   impactEffect: {fileID: 1806931374014481055, guid: e3630c7e107601d48b735283e5ea8b88, type: 3}
   projectile: {fileID: 0}
-  fireSound: {fileID: 8300000, guid: 24fa0215fc26f4239be505589d87ac68, type: 3}
+  fireSound: {fileID: 8300000, guid: 562378879fe9a2c46bd53bcfda6686ca, type: 3}
   startingPosition: {x: 0.1196, y: -0.1091, z: 0.0233}
   startingRotation: {x: 347.11514, y: 112.02789, z: 93.45646}
-  startingAmmo: 144
-  magazineSize: 12
+  startingAmmo: 288
+  magazineSize: 24
   magazineAmmo: 0
   totalAmmo: 0
 --- !u!1001 &2209503544341941646
