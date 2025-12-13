@@ -7,7 +7,7 @@ namespace RaveSurvival
         void OnTriggerEnter(Collider other)
         {
             DebugManager.Instance.Print(other.gameObject.layer.ToString(), DebugManager.DebugLevel.Paul);
-            if (other.gameObject.layer == Player.PlayerLayer)
+            if (other.gameObject.tag.ToLower() == "player")
             {
 
                 Player player = other.gameObject.GetComponent<Player>();

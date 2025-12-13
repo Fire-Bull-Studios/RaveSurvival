@@ -49,7 +49,7 @@ public class Player : Entity
 
     public String interactBtn = "E";
 
-    Vector3 meshPos = new Vector3(0.1f, -1.675f, -0.1f);
+    Vector3 meshPos = new Vector3(0.0875f, -1.6275f, -0.16f);
     string ammoStr;
 
     private InputSystem_Actions inputActions;
